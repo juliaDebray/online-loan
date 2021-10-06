@@ -25,13 +25,19 @@
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Bibliothèque</a>
+                                <a class="nav-link" href="{{ path('books_catalog') }}">Bibliothèque</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Mes emprunts</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Les emprunts en cours</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('employees_new') }}">Créer un compte employé</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('customers_validation_page') }}">Demandes de compte</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
@@ -48,10 +54,8 @@
             {% endblock %}
         </main>
         {% block footer %}
-            <footer class="py-5 bg-dark text-light  text-light d-flex flex-row justify-content-center">
-                <div class="column">
+            <footer class="py-5 bg-dark text-light text-center">
                     <p>@Julia Debray</p>
-                </div>
             </footer>
         {% endblock footer %}
     </body>

@@ -18,18 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomersController extends AbstractController
 {
     /**
-     * @param CustomersRepository $customersRepository
-     * @return Response
-     * @Route ("/", name="customers_index",  methods={"GET"}),
-     */
-    public function index(CustomersRepository $customersRepository): Response
-    {
-        return $this->render('customers/index.html.twig', [
-            'customers' => $customersRepository->findAll(),
-        ]);
-    }
-
-    /**
+     * Create a customer account
+     *
      * @param Request $request
      * @return Response
      * @Route ("/new", name="customers_new", methods={"GET","POST"}),
@@ -63,6 +53,55 @@ class CustomersController extends AbstractController
     }
 
     /**
+     * Display the page where the employee can validate a new account
+     *
+     * @Route("/validationPage", name="customers_validation_page", methods={"GET","POST"}),
+     */
+    public function displayValidateCustomer(CustomersRepository $customersRepository): Response
+    {
+        $customers = $customersRepository->findBy([ 'status' =>'pending' ]);
+
+        return $this->render('customers/customersValidationPage.html.twig',
+            [ 'customers' => $customers ]);
+    }
+
+    /**
+     * Validate a new customer's account
+     *
+     * @Route("/validation/{customerId}", name="customers_validation", methods={"GET","POST"}),
+     */
+    public function validateCustomer(CustomersRepository $customersRepository, int $customerId): Response
+    {
+        $customer = $customersRepository->find($customerId);
+        $customer->setStatus('validated');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($customer);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('customers_validation_page');
+    }
+
+    /**
+     * refuse a new customer's account
+     *
+     * @param Request $request
+     * @param Customers $customer
+     * @return Response
+     * @Route ("/refuse/{customerId}", name="customers_delete", methods={"GET","POST"}),
+     */
+    public function delete(CustomersRepository $customersRepository, int $customerId): Response
+    {
+        $customerToDelete = $customersRepository->find($customerId);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($customerToDelete);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('customers_validation_page');
+    }
+
+    /**
+     * Not used for now
+     *
      * @param Customers $customer
      * @return Response
      * @Route ("/{id}", name="customers_show", methods={"GET"}),
@@ -75,6 +114,8 @@ class CustomersController extends AbstractController
     }
 
     /**
+     * not used for now
+     *
      * @param Request $request
      * @param Customers $customer
      * @return Response
@@ -98,19 +139,16 @@ class CustomersController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Customers $customer
+     * not used for now
+     *
+     * @param CustomersRepository $customersRepository
      * @return Response
-     * @Route ("/{id}", name="customers_delete", methods={"POST"}),
+     * @Route ("/", name="customers_index",  methods={"GET"}),
      */
-    public function delete(Request $request, Customers $customer): Response
+    public function index(CustomersRepository $customersRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$customer->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($customer);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('customers_index', [], Response::HTTP_SEE_OTHER);
+        return $this->render('customers/index.html.twig', [
+            'customers' => $customersRepository->findAll(),
+        ]);
     }
 }
