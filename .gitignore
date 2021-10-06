@@ -1,3 +1,7 @@
+# Specific to the project
+ public/uploads
+ !public/**/.gitkeep
+
 # General
 .DS_Store
 .AppleDouble
