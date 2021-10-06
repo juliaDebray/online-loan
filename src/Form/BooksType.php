@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Length;
 
 class BooksType extends AbstractType
 {
@@ -39,6 +40,7 @@ class BooksType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
+                        'maxSizeMessage' => 'Le fichier est trop lourd. Taille maximum autorisée : 1024 ko',
                         'mimeTypes' => [
                             'image/jpg',
                             'image/jpeg',
@@ -47,7 +49,7 @@ class BooksType extends AbstractType
                     ])
                 ],
                 ])
-            ->add('description', TextareaType::class, [
+            ->add('description', TextType::class, [
                 'required'=>false,
                 'label'=>'Description',
             ])

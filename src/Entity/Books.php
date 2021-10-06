@@ -26,29 +26,50 @@ class Books
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum")
      */
     private $author;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Length(
+     *     allowEmptyString=false,
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum")
      */
     private $literaryGenre;
 

@@ -24,6 +24,10 @@ final class Customers extends Users
      * @Assert\Regex(
      *     "/\D/",
      *     message="Seule les lettres sont acceptées")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
      */
     private $firstname;
 
@@ -33,6 +37,10 @@ final class Customers extends Users
      * @Assert\Regex(
      *     "/\D/",
      *     message="Seule les lettres sont acceptées")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
      */
     private $lastname;
 
@@ -45,12 +53,20 @@ final class Customers extends Users
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
      */
     private $zipcode;
 
@@ -60,6 +76,10 @@ final class Customers extends Users
      * @Assert\Regex(
      *     "/\D/",
      *     message="Seule les lettres sont acceptées")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="255",
+     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
      */
     private $city;
 

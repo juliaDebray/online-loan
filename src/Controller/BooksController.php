@@ -19,6 +19,18 @@ class BooksController extends AbstractController
     /**
      * @param BooksRepository $booksRepository
      * @return Response
+     * @Route ("/books_catalog", name="books_catalog", methods={"GET"}),
+     */
+    public function displayBookCatalog(BooksRepository $booksRepository): Response
+    {
+        return $this->render('books/booksCatalog.html.twig', [
+            'books' => $booksRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @param BooksRepository $booksRepository
+     * @return Response
      * @Route ("/", name="books_index", methods={"GET"}),
      */
     public function index(BooksRepository $booksRepository): Response

@@ -27,6 +27,10 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Ce champs est recquis")
      * @Assert\Email(message = "L'email est incorrecte")
+     * @Assert\Length(
+     *     charset="UTF-8",
+     *     max="180",
+     *     maxMessage="180 caractères maximum")
      */
     private $email;
 
@@ -91,8 +95,11 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
     public function getRoles(): array
     {
         $roles = $this->roles;
+
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        if($roles === null) {
+            $roles[] = 'ROLE_USER';
+        }
 
         return array_unique($roles);
     }
