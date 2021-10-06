@@ -34,7 +34,11 @@ class CustomersType extends AbstractType
             ->add('lastname', TextType::class,
                 ['label'=> 'Nom de famille'])
             ->add('birthdate', BirthdayType::class,
-                ['label'=>'Date de naissance'])
+                [
+                'label'=>'Date de naissance',
+                'format'=>'dd/MM/yyyy', 'years'=> range(date('Y')-110, date('Y')),
+
+                ])
             ->add('address', TextType::class,
                 ['label'=>'Addresse'])
             ->add('zipcode', TextType::class,

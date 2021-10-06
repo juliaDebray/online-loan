@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BooksRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BooksRepository::class)
@@ -24,11 +25,13 @@ class Books
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $author;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $title;
 
@@ -39,16 +42,19 @@ class Books
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $literaryGenre;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $releaseDate;
 

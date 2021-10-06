@@ -47,6 +47,8 @@ class BooksController extends AbstractController
             if($imageFile) {
                 $fileName = $fileUploader->upload($imageFile);
                 $book->setImage($fileName);
+            } else {
+                $book->setImage('default_cover.jpg');
             }
 
             $entityManager = $this->getDoctrine()->getManager();

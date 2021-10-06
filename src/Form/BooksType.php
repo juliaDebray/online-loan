@@ -61,6 +61,8 @@ class BooksType extends AbstractType
             ->add('releaseDate', DateType::class, [
                 'required'=>false,
                 'label'=>'Date de parution',
+                'format'=>'dd/MM/yyyy',
+                'years'=> range(date('Y')-200, date('Y')+100),
             ])
         ;
     }
