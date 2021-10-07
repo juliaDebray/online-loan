@@ -4,7 +4,8 @@
 
 {% block body %}
 
-    <h1>Bibliothèque</h1>
+    <div class="container border">
+    <h1 class="text-center m-3">Bibliothèque</h1>
 
     {% for book in books%}
         <div class="card mb-3">
@@ -17,12 +18,22 @@
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">
+                            <small>
+                            {{ book.literaryGenre }} |
+                            {{ book.releaseDate|format_datetime('short', 'none', locale='fr') }} |
+                            {{ book.author }}
+                            </small>
+                        </p>
                         <p class="card-text">{{ book.description }}</p>
+                        <p class="card-text">
+
+
                         {% if book.status == 'disponible' %}
-                        <p class="card-text"><small class="text-success">{{ book.status }}</small></p>
-                        <a class="btn btn-success text-light">Réserver</a>
+                            <p class="card-text text-success">Disponible</p>
+                            <a href="{{ path('reservations', { 'bookId':book.id }) }}" class="btn btn-success text-light">Réserver</a>
                         {% else %}
-                            <p class="card-text"><small class="text-danger">{{ book.status }}</small></p>
+                            <p class="card-text text-danger">Indisponible</p>
                             <a class="btn btn-danger disabled">Indisponible</a>
                         {% endif %}
 
@@ -31,5 +42,6 @@
             </div>
         </div>
     {% endfor %}
+    </div>
 
 {% endblock %}

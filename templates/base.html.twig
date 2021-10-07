@@ -39,6 +39,9 @@
                                 <a class="nav-link {{ currentPath == path('customers_validation_page') ? 'active' : '' }}" href="{{ path('customers_validation_page') }}">Demandes de compte</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link {{ currentPath == path('books_new') ? 'active' : '' }}" href="{{ path('books_new') }}">Ajouter un livre</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                             </li>
                             {% else %}

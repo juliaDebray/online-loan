@@ -79,6 +79,11 @@ class Books
      */
     private $releaseDate;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Reservations::class, mappedBy="book", cascade={"persist", "remove"})
+     */
+    private $reservation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,6 +169,23 @@ class Books
     public function setReleaseDate(?\DateTimeInterface $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    public function getReservation(): ?Reservations
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservations $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getBook() !== $this) {
+            $reservation->setBook($this);
+        }
+
+        $this->reservation = $reservation;
 
         return $this;
     }
