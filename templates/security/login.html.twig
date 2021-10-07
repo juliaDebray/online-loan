@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Connexion{% endblock %}
-{% block header %}
-{% endblock header %}
+
 {% block body %}
 <form method="post">
     {% if error %}
@@ -29,5 +28,3 @@
     <a class="btn btn-lg btn-primary" href="{{ path('customers_new') }}">Créer un compte</a>
 </form>
 {% endblock %}
-{% block footer %}
-{% endblock footer %}
