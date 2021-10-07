@@ -43,7 +43,7 @@ class CustomersController extends AbstractController
             $entityManager->persist($customer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('customers_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->renderForm('customers/new.html.twig', [
