@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservations;
 use App\Repository\BooksRepository;
+use App\Repository\ReservationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,7 @@ class ReservationsController extends AbstractController
     /**
      * Allow a user to reserve a book
      *
-     * @Route("/{bookId}", name="book_reservation", methods={"GET","POST"}),
+     * @Route("/reserve/{bookId}", name="book_reservation", methods={"GET","POST"}),
      */
     public function new(BooksRepository $booksRepository, int $bookId): Response
     {
@@ -66,5 +67,23 @@ class ReservationsController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('books_catalog');
+    }
+
+    /**
+     * @Route("/show_loanings", name="loanings_show", methods={"GET","POST"})
+     */
+    public function showLoaning(ReservationsRepository $reservationsRepository)
+    {
+        $reservations = $reservationsRepository->findBy(['status'=>'borrowed']);
+
+        $books = [];
+
+        foreach($reservations as $reservation) {
+            array_push($books, $reservation->getBook());
+        }
+
+        return $this->render('/reservations/showAll.html.twig', [
+            'books'=>$books
+        ]);
     }
 }

@@ -30,7 +30,7 @@
                                 <a class="nav-link" href="#">Mes emprunts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Les emprunts en cours</a>
+                                <a class="nav-link {{ currentPath == path('loanings_show') ? 'active' : '' }}" href="{{ path('loanings_show') }}">Les emprunts en cours</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ currentPath == path('employees_new') ? 'active' : '' }}" href="{{ path('employees_new') }}">Créer un compte employé</a>
