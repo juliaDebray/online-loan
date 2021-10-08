@@ -79,13 +79,19 @@ class ReservationsController extends AbstractController
         $reservations = $reservationsRepository->findBy(['status'=>'borrowed']);
 
         $books = [];
+        $lateBooks = [];
+        $now = new \DateTime();
 
         foreach($reservations as $reservation) {
+            if($reservation->getEndDate() > $now) {
+                array_push($lateBooks, $reservation->getBook());
+            }
             array_push($books, $reservation->getBook());
         }
 
         return $this->render('/reservations/showAll.html.twig', [
-            'books'=>$books
+            'lateBooks' => $lateBooks,
+            'books' => $books,
         ]);
     }
 }

@@ -4,6 +4,35 @@
 
 {% block body %}
     <h1 class="text-center">Liste des emprunts</h1>
+    {% if lateBooks %}
+        {% for lateBook in lateBooks %}
+            <div class="card mb-3 border-danger">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ asset('uploads/booksCover/' ~ lateBook.image) }}"
+                             class="img-fluid rounded-start"
+                             alt="image de couverture du livre">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ lateBook.title }}</h5>
+                            <p class="card-text">
+                                <small>
+                                    {{ lateBook.literaryGenre }} |
+                                    {{ lateBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
+                                    {{ lateBook.author }}
+                                </small>
+                            </p>
+                            <p class="card-text">{{ lateBook.description }}</p>
+                            <p class="card-text text-danger">Emprunté</p>
+                            <p class="text-danger">Attention : ce livre est en retard</p>
+                            <a class="btn btn-success text-light">Confirmer le retour</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     {% for book in books %}
         <div class="card mb-3">
             <div class="row g-0">
