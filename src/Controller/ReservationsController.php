@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReservationsController extends AbstractController
 {
     /**
+     * Allow a user to reserve a book
+     *
      * @Route("/reservations/{bookId}", name="reservations", methods={"GET","POST"}),
      */
     public function new(BooksRepository $booksRepository, int $bookId): Response

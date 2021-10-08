@@ -26,17 +26,25 @@
                             </small>
                         </p>
                         <p class="card-text">{{ book.description }}</p>
-                        <p class="card-text">
-
-
-                        {% if book.status == 'disponible' %}
-                            <p class="card-text text-success">Disponible</p>
-                            <a href="{{ path('reservations', { 'bookId':book.id }) }}" class="btn btn-success text-light">Réserver</a>
-                        {% else %}
-                            <p class="card-text text-danger">Indisponible</p>
-                            <a class="btn btn-danger disabled">Indisponible</a>
-                        {% endif %}
-
+                            {% if is_granted('ROLE_CUSTOMER') %}
+                                {% if book.status == 'disponible' %}
+                                    <p class="card-text text-success">Disponible</p>
+                                    <a href="{{ path('reservations', { 'bookId':book.id }) }}" class="btn btn-success text-light">Réserver</a>
+                                {% else %}
+                                    <p class="card-text text-danger">Indisponible</p>
+                                    <a class="btn btn-danger disabled">Indisponible</a>
+                                {% endif %}
+                            {% else %}
+                                {% if book.status == 'disponible' %}
+                                    <p class="card-text text-success">Disponible</p>
+                                {% elseif book.status == 'reserved' %}
+                                    <p class="card-text text-warning">Réservé</p>
+                                    <a class="btn btn-warning text-light">Confirmer l'emprunt</a>
+                                {% elseif book.status == 'borrowed' %}
+                                    <p class="card-text text-danger">Emprunté</p>
+                                    <a class="btn btn-success text-light">Confirmer le retour</a>
+                                {% endif %}
+                            {% endif %}
                     </div>
                 </div>
             </div>
