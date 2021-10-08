@@ -29,7 +29,7 @@
                             {% if is_granted('ROLE_CUSTOMER') %}
                                 {% if book.status == 'disponible' %}
                                     <p class="card-text text-success">Disponible</p>
-                                    <a href="{{ path('reservations', { 'bookId':book.id }) }}" class="btn btn-success text-light">Réserver</a>
+                                    <a href="{{ path('book_reservation', { 'bookId':book.id }) }}" class="btn btn-success text-light">Réserver</a>
                                 {% else %}
                                     <p class="card-text text-danger">Indisponible</p>
                                     <a class="btn btn-danger disabled">Indisponible</a>
@@ -39,7 +39,7 @@
                                     <p class="card-text text-success">Disponible</p>
                                 {% elseif book.status == 'reserved' %}
                                     <p class="card-text text-warning">Réservé</p>
-                                    <a class="btn btn-warning text-light">Confirmer l'emprunt</a>
+                                    <a href="{{ path('book_loaning', {'bookId':book.id }) }}" class="btn btn-warning text-light">Confirmer l'emprunt</a>
                                 {% elseif book.status == 'borrowed' %}
                                     <p class="card-text text-danger">Emprunté</p>
                                     <a class="btn btn-success text-light">Confirmer le retour</a>
