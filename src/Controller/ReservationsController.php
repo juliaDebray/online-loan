@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Reservations;
 use App\Repository\BooksRepository;
 use App\Repository\ReservationsRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+//use Symfony\component\Notifier\Notification\Notification;
+//use Symfony\Component\Notifier\NotifierInterface;
 
 /**
  * @Route("/reservations")
@@ -22,8 +25,8 @@ class ReservationsController extends AbstractController
     public function new(BooksRepository $booksRepository, int $bookId): Response
     {
         $book = $booksRepository->find($bookId);
-        $startDate = new \DateTime('now');
-        $endDate = new \DateTime('now');
+        $startDate = new DateTime('now');
+        $endDate = new DateTime('now');
         $endDate->modify('+3 day');
 
         $reservation = new Reservations();
@@ -48,15 +51,16 @@ class ReservationsController extends AbstractController
      *
      * @param BooksRepository $booksRepository
      * @param int $bookId
+     * @return Response
      * @Route("/edit/{bookId}", name="book_loaning", methods={"GET","POST"})
      */
-    public function setLoaning(BooksRepository $booksRepository, int $bookId)
+    public function setLoaning(BooksRepository $booksRepository, int $bookId): Response
     {
         $book = $booksRepository->find($bookId);
         $reservation = $book->getReservation();
 
-        $startDate = new \DateTime('now');
-        $endDate = new \DateTime('now');
+        $startDate = new DateTime('now');
+        $endDate = new DateTime('now');
         $endDate->modify('+21 day');
 
         $reservation->setStatus('borrowed');
@@ -72,15 +76,17 @@ class ReservationsController extends AbstractController
     }
 
     /**
+     * display the all the reservations
+     *
      * @Route("/show_loanings", name="loanings_show", methods={"GET","POST"})
      */
-    public function showLoaning(ReservationsRepository $reservationsRepository)
+    public function showLoaning(ReservationsRepository $reservationsRepository): Response
     {
         $reservations = $reservationsRepository->findBy(['status'=>'borrowed']);
 
         $books = [];
         $lateBooks = [];
-        $now = new \DateTime();
+        $now = new DateTime();
 
         foreach($reservations as $reservation)
         {
@@ -95,6 +101,41 @@ class ReservationsController extends AbstractController
         return $this->render('/reservations/showAll.html.twig', [
             'lateBooks' => $lateBooks,
             'books' => $books,
+        ]);
+    }
+
+    /**
+     * display the reservations of one user
+     *
+     * @Route("/show_user_loanings", name="loanings_user_show", methods={"GET","POST"})
+     */
+    public function showUserLoaning(): Response
+    {
+        $user = $this->getUser();
+        $userReservations = $user->getReservations();
+        $now = new DateTime();
+        $userLateBooks = [];
+        $userBooks = [];
+
+        foreach ($userReservations as $userReservation)
+        {
+            if($userReservation->getEndDate() < $now )
+            {
+                array_push($userLateBooks, $userReservation->getBook());
+            } else {
+                array_push($userBooks, $userReservation->getBook());
+            }
+        }
+
+        if(!empty($userLateBooks))
+        {
+            $this->addFlash('warning',' Attention : Vous devez rendre les livres en retard !');
+        }
+
+        return $this->render('/reservations/showUserReservations.html.twig',
+        [
+            'userLateBooks' => $userLateBooks,
+            'userBooks' => $userBooks
         ]);
     }
 }

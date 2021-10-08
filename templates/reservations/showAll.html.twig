@@ -24,8 +24,7 @@
                                 </small>
                             </p>
                             <p class="card-text">{{ lateBook.description }}</p>
-                            <p class="card-text text-danger">Emprunté</p>
-                            <p class="text-danger">Attention : ce livre est en retard</p>
+                            <p class="text-danger">Date de retour : {{ lateBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
                             <a class="btn btn-success text-light">Confirmer le retour</a>
                         </div>
                     </div>
@@ -52,7 +51,7 @@
                             </small>
                         </p>
                         <p class="card-text">{{ book.description }}</p>
-                        <p class="card-text text-danger">Emprunté</p>
+                        <p class="text-success">Date de retour : {{ book.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
                         <a class="btn btn-success text-light">Confirmer le retour</a>
                     </div>
                 </div>
