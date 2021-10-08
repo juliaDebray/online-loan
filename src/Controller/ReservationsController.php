@@ -82,11 +82,14 @@ class ReservationsController extends AbstractController
         $lateBooks = [];
         $now = new \DateTime();
 
-        foreach($reservations as $reservation) {
-            if($reservation->getEndDate() > $now) {
+        foreach($reservations as $reservation)
+        {
+            if($reservation->getEndDate() < $now)
+            {
                 array_push($lateBooks, $reservation->getBook());
+            } else {
+                array_push($books, $reservation->getBook());
             }
-            array_push($books, $reservation->getBook());
         }
 
         return $this->render('/reservations/showAll.html.twig', [
