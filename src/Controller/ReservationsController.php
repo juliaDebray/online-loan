@@ -23,7 +23,8 @@ class ReservationsController extends AbstractController
     {
         $book = $booksRepository->find($bookId);
         $startDate = new \DateTime('now');
-        $endDate = $startDate->modify('+3 day');
+        $endDate = new \DateTime('now');
+        $endDate->modify('+3 day');
 
         $reservation = new Reservations();
         $reservation->setBook($book);
@@ -55,7 +56,8 @@ class ReservationsController extends AbstractController
         $reservation = $book->getReservation();
 
         $startDate = new \DateTime('now');
-        $endDate = $startDate->modify('+21 day');
+        $endDate = new \DateTime('now');
+        $endDate->modify('+21 day');
 
         $reservation->setStatus('borrowed');
         $reservation->setStartDate($startDate);
