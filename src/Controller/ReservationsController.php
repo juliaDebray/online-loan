@@ -138,4 +138,22 @@ class ReservationsController extends AbstractController
             'userBooks' => $userBooks
         ]);
     }
+
+        /**
+         * Delete a book's reservation (the user had returned the book to the library)
+         *
+         * @Route("/delete/{reservationId}", name="delete_reservation", methods={"GET","POST"})
+         */
+        public function delete(ReservationsRepository $reservationsRepository, int $reservationId): Response
+        {
+            $reservationToDelete = $reservationsRepository->find($reservationId);
+            $bookReserved = $reservationToDelete->getBook();
+            $bookReserved->setStatus('disponible');
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($reservationToDelete);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('loanings_show');
+        }
 }

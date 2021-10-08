@@ -52,7 +52,7 @@
                         </p>
                         <p class="card-text">{{ book.description }}</p>
                         <p class="text-success">Date de retour : {{ book.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
-                        <a class="btn btn-success text-light">Confirmer le retour</a>
+                        <a class="btn btn-success text-light" href="{{ path('delete_reservation', { 'reservationId': book.reservation.id }) }}">Confirmer le retour</a>
                     </div>
                 </div>
             </div>

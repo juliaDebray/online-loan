@@ -58,10 +58,7 @@
                         {% else %}
                             <p class="card-text text-success">Emprunté</p>
                             <p class="text-success">A rendre pour le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
-
-                            {% endif %}
-                               <p>
-                               </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
