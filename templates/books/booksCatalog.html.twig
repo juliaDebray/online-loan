@@ -27,7 +27,7 @@
                         </p>
                         <p class="card-text">{{ book.description }}</p>
                             {% if is_granted('ROLE_CUSTOMER') %}
-                                {% if book.status == 'disponible' %}
+                                {% if book.reservation is null %}
                                     <p class="card-text text-success">Disponible</p>
                                     <a href="{{ path('book_reservation', { 'bookId':book.id }) }}" class="btn btn-success text-light">Réserver</a>
                                 {% else %}
@@ -35,12 +35,12 @@
                                     <a class="btn btn-danger disabled">Indisponible</a>
                                 {% endif %}
                             {% else %}
-                                {% if book.status == 'disponible' %}
+                                {% if book.reservation is null or book.reservation is empty %}
                                     <p class="card-text text-success">Disponible</p>
-                                {% elseif book.status == 'reserved' %}
+                                {% elseif book.reservation.status == 'reserved' %}
                                     <p class="card-text text-warning">Réservé</p>
                                     <a href="{{ path('book_loaning', {'bookId':book.id }) }}" class="btn btn-warning text-light">Confirmer l'emprunt</a>
-                                {% elseif book.status == 'borrowed' %}
+                                {% elseif book.reservation.status == 'borrowed' %}
                                     <p class="card-text text-danger">Emprunté</p>
                                     <a class="btn btn-success text-light">Confirmer le retour</a>
                                 {% endif %}

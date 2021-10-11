@@ -24,7 +24,7 @@ class Reservations
     private $User;
 
     /**
-     * @ORM\OneToOne(targetEntity=Books::class, inversedBy="reservation", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Books::class, inversedBy="reservation")
      * @ORM\JoinColumn(nullable=false)
      */
     private $book;

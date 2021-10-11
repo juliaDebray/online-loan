@@ -40,9 +40,6 @@ class ReservationsController extends AbstractController
         $entityManager->persist($reservation);
         $entityManager->flush();
 
-        $book->setStatus('reserved');
-        $entityManager->flush();
-
         return $this->redirectToRoute('books_catalog');
     }
 
@@ -67,9 +64,6 @@ class ReservationsController extends AbstractController
         $reservation->setStartDate($startDate);
         $reservation->setEndDate($endDate);
 
-        $this->getDoctrine()->getManager()->flush();
-
-        $book->setStatus('borrowed');
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('books_catalog');
@@ -147,8 +141,6 @@ class ReservationsController extends AbstractController
         public function delete(ReservationsRepository $reservationsRepository, int $reservationId): Response
         {
             $reservationToDelete = $reservationsRepository->find($reservationId);
-            $bookReserved = $reservationToDelete->getBook();
-            $bookReserved->setStatus('disponible');
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($reservationToDelete);

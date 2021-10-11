@@ -51,7 +51,7 @@
                             </small>
                         </p>
                         <p class="card-text">{{ userBook.description }}</p>
-                        {% if userBook.status == 'reserved' %}
+                        {% if userBook.reservation.status == 'reserved' %}
                             <p class="card-text text-success">Réservé</p>
                             <p class="text-success">fin de la réservation le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
                             </p>

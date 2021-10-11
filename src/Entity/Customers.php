@@ -109,6 +109,11 @@ class Customers extends Users
         return $this;
     }
 
+    public function getFullname() :?string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
     public function getBirthdate(): ?\DateTimeInterface
     {
         return $this->birthdate;

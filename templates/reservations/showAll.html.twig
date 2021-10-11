@@ -25,6 +25,7 @@
                             </p>
                             <p class="card-text">{{ lateBook.description }}</p>
                             <p class="text-danger">Date de retour : {{ lateBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
+                            <p>Emprunté par : {{ book.reservation.user.fullname }} </p>
                             <a class="btn btn-success text-light">Confirmer le retour</a>
                         </div>
                     </div>
@@ -52,6 +53,7 @@
                         </p>
                         <p class="card-text">{{ book.description }}</p>
                         <p class="text-success">Date de retour : {{ book.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
+                        <p>Emprunté par : {{ book.reservation.user.fullname }}</p>
                         <a class="btn btn-success text-light" href="{{ path('delete_reservation', { 'reservationId': book.reservation.id }) }}">Confirmer le retour</a>
                     </div>
                 </div>
