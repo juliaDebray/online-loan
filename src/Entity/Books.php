@@ -20,11 +20,6 @@ class Books
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $status;
-
-    /**
-     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
      * @Assert\Length(
      *     charset="UTF-8",
@@ -84,21 +79,17 @@ class Books
      */
     private $reservation;
 
+    public function __toString(): string
+    {
+        if($this->getReservation()) {
+            return $this->getTitle() . ': ' . $this->getReservation()->getStatus();
+        }
+        return $this->getTitle();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     public function getAuthor(): ?string

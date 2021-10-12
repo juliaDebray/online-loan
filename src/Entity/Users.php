@@ -66,6 +66,20 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
         $this->reservations = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        if($this instanceof  Customers)
+        {
+            return $this->getFirstname() . ' ' . $this->getLastname();
+        }
+        else
+        {
+            return 'cet utilisateur ne peut pas encore emprunter de livre';
+        }
+
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;

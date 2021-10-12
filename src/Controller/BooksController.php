@@ -53,7 +53,6 @@ class BooksController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $book->setStatus('disponible');
             $imageFile = $form['image']->getData();
 
             if($imageFile) {

@@ -9,8 +9,6 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-//use Symfony\component\Notifier\Notification\Notification;
-//use Symfony\Component\Notifier\NotifierInterface;
 
 /**
  * @Route("/reservations")

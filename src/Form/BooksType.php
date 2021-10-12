@@ -23,7 +23,6 @@ class BooksType extends AbstractType
         'Science-fiction'=>'Science-fiction'
     ];
 
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

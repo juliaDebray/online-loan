@@ -44,6 +44,11 @@ class Reservations
      */
     private $status;
 
+    public function __toString():string
+    {
+        return $this->id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
