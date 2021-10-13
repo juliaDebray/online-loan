@@ -43,24 +43,4 @@ class BooksRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    /**
-     * @return Books[] Returns an array of Books objects
-     */
-//    public function likeByTitleAndGenre(string $title, string $genre = null): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.title LIKE :title')
-//            ->setParameter('title', '%'.$title.'%')
-//            ->orderBy('b.id', 'ASC');
-//
-//            if($genre !== null) {
-//            ->andWhere('b.literaryGenre :genre')
-//            ->setParameter('genre', $genre);
-//            }
-//
-//            ->getQuery()
-//            ->getResult()
-//            ;
-//    }
 }
