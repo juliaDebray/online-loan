@@ -7,6 +7,7 @@ use App\Form\BooksType;
 use App\Repository\BooksRepository;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,30 @@ class BooksController extends AbstractController
         return $this->render('books/booksCatalog.html.twig', [
             'books' => $booksRepository->findAll(),
         ]);
+    }
+
+    /**
+     * @param BooksRepository $booksRepository
+     * @return Response
+     * @Route ("/search/{type}/{title?}", name="books_search", methods={"GET"}),
+     */
+    public function search(BooksRepository $booksRepository, string $type, ?string $title): Response
+    {
+        $books = $booksRepository->likeBy($title, $type);
+
+        return $this->render('books/_books_template.html.twig', ['books' => $books]);
+    }
+
+    /**
+     * @param BooksRepository $booksRepository
+     * @return Response
+     * @Route ("/searchByTitle/{title}", name="books_search_by_title", methods={"GET"}),
+     */
+    public function searchByTitle(BooksRepository $booksRepository, string $title): Response
+    {
+        $type = null;
+        $books = $booksRepository->likeBy($title, $type);
+        return $this->render('books/_books_template.html.twig', ['books' => $books]);
     }
 
     /**

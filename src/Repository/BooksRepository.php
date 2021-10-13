@@ -19,32 +19,48 @@ class BooksRepository extends ServiceEntityRepository
         parent::__construct($registry, Books::class);
     }
 
-    // /**
-    //  * @return Books[] Returns an array of Books objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Books[] Returns an array of Books objects
+      */
+    public function likeBy($title, $type): array
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this->createQueryBuilder('b');
 
-    /*
-    public function findOneBySomeField($value): ?Books
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+        if (isset($title) && !empty($title)) {
+            $query
+                ->andWhere('b.title LIKE :title')
+                ->setParameter('title', '%'.$title.'%');
+        }
+
+        if (isset($type) && !empty($type)) {
+            $query
+                ->andWhere('b.literaryGenre = :type')
+                ->setParameter('type', $type);
+        }
+
+        return $query
+            ->orderBy('b.id', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    /**
+     * @return Books[] Returns an array of Books objects
+     */
+//    public function likeByTitleAndGenre(string $title, string $genre = null): array
+//    {
+//        return $this->createQueryBuilder('b')
+//            ->andWhere('b.title LIKE :title')
+//            ->setParameter('title', '%'.$title.'%')
+//            ->orderBy('b.id', 'ASC');
+//
+//            if($genre !== null) {
+//            ->andWhere('b.literaryGenre :genre')
+//            ->setParameter('genre', $genre);
+//            }
+//
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
 }

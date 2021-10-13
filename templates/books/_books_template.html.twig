@@ -1,0 +1,57 @@
+{% if books %}
+    {% for book in books %}
+
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ asset('uploads/booksCover/' ~ book.image) }}"
+                     class="img-fluid rounded-start"
+                     alt="image de couverture du livre">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">
+                        <small>
+                            {{ book.literaryGenre }} |
+                            {{ book.releaseDate|format_datetime('short', 'none', locale='fr') }} |
+                            {{ book.author }}
+                        </small>
+                    </p>
+                    <p class="card-text">{{ book.description }}</p>
+
+                    {% if book.reservation is null or book.reservation is empty %}
+
+                        <p class="card-text text-success">Disponible</p>
+                        {% if is_granted('ROLE_CUSTOMER') %}
+                            <a href="{{ path('book_reservation', { 'bookId':book.id }) }}"
+                               class="btn btn-success text-light">Réserver </a>
+                        {% endif %}
+
+                    {% else %}
+
+                        {% if is_granted('ROLE_CUSTOMER') %}
+                            <p class="card-text text-danger">Indisponible</p>
+                            <a class="btn btn-danger disabled">Indisponible</a>
+                        {% elseif is_granted('ROLE_EMPLOYEE') %}
+
+                            {% if book.reservation.status == 'reserved' %}
+                                <p class="card-text text-warning">Réservé</p>
+                                <a
+                                        href="{{ path('book_loaning', {'bookId':book.id }) }}"
+                                        class="btn btn-warning text-light">Confirmer l'emprunt
+                                </a>
+                            {% elseif book.reservation.status == 'borrowed' %}
+                                <p class="card-text text-danger">Emprunté</p>
+                                <a class="btn btn-success text-light">Confirmer le retour</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Aucun livre ne répond à vos critères</p>
+{% endif %}

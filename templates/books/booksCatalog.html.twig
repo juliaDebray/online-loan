@@ -4,52 +4,92 @@
 
 {% block body %}
 
-    <div class="container border">
+<div class="container border">
     <h1 class="text-center m-3">Bibliothèque</h1>
 
-    {% for book in books %}
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{ asset('uploads/booksCover/' ~ book.image) }}"
-                         class="img-fluid rounded-start"
-                         alt="image de couverture du livre">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ book.title }}</h5>
-                        <p class="card-text">
-                            <small>
-                            {{ book.literaryGenre }} |
-                            {{ book.releaseDate|format_datetime('short', 'none', locale='fr') }} |
-                            {{ book.author }}
-                            </small>
-                        </p>
-                        <p class="card-text">{{ book.description }}</p>
-                            {% if is_granted('ROLE_CUSTOMER') %}
-                                {% if book.reservation is null %}
-                                    <p class="card-text text-success">Disponible</p>
-                                    <a href="{{ path('book_reservation', { 'bookId':book.id }) }}" class="btn btn-success text-light">Réserver</a>
-                                {% else %}
-                                    <p class="card-text text-danger">Indisponible</p>
-                                    <a class="btn btn-danger disabled">Indisponible</a>
-                                {% endif %}
-                            {% else %}
-                                {% if book.reservation is null or book.reservation is empty %}
-                                    <p class="card-text text-success">Disponible</p>
-                                {% elseif book.reservation.status == 'reserved' %}
-                                    <p class="card-text text-warning">Réservé</p>
-                                    <a href="{{ path('book_loaning', {'bookId':book.id }) }}" class="btn btn-warning text-light">Confirmer l'emprunt</a>
-                                {% elseif book.reservation.status == 'borrowed' %}
-                                    <p class="card-text text-danger">Emprunté</p>
-                                    <a class="btn btn-success text-light">Confirmer le retour</a>
-                                {% endif %}
-                            {% endif %}
-                    </div>
-                </div>
-            </div>
+    <div class="input-group">
+        <div class="form-outline my-2">
+            <input id="search-focus" type="search" class="form-control" placeholder="recherche" />
+            <label class="form-label" for="search-focus"></label>
+            <select id="search-select" class="form-select" aria-label="Default select example">
+                <option selected value="">Genre</option>
+                <option>Polar</option>
+                <option>Fantastique</option>
+                <option>Science-fiction</option>
+            </select>
         </div>
-    {% endfor %}
     </div>
 
+    <div id="books_block_show">
+       {% include('books/_books_template.html.twig') %}
+    </div>
+</div>
+
+<script>
+    const debounce = (func, wait, immediate, context) => {
+        let result;
+        let timeout = null;
+        return function() {
+            const ctx = context || this;
+            const args = arguments;
+            const later = () => {
+                timeout = null;
+                if (!immediate) result = func.apply(ctx, args);
+            };
+            const callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) result = func.apply(ctx, args);
+            return result;
+        };
+    };
+
+    const searchBar = document.getElementById('search-focus');
+    const searchSelect = document.getElementById('search-select');
+    const textHere = document.getElementById('textHere');
+
+    const getTargetValues = () => {
+        const bookTitle = searchBar.value;
+        const bookType = searchSelect.value;
+
+        let url;
+
+        if (!bookTitle && !bookType) {
+            url = '{{ path('books_catalog') }}';
+        } else if (bookTitle !== '' && bookType !== '') {
+            url = '{{ path('books_search', {'title': 'title', 'type': 'type'}) }}';
+            url = url.replace('title', encodeURIComponent(bookTitle));
+            url = url.replace('type', encodeURIComponent(bookType));
+
+        } else if (bookType &&  !bookTitle) {
+            url = '{{ path('books_search', {'title': 'title', 'type': 'type'}) }}';
+            url = url.replace('title', encodeURIComponent(bookTitle || ''));
+            url = url.replace('type', encodeURIComponent(bookType));
+
+        } else{
+            url = '{{ path('books_search_by_title', {'title': 'title'}) }}';
+            url = url.replace('title', encodeURIComponent(bookTitle));
+        }
+
+        return url;
+    };
+
+    const booksSearching = async () => {
+        const url = getTargetValues();
+
+        const response = await fetch(url);
+        const text = await response.text();
+        const dom = new DOMParser().parseFromString(text, 'text/html');
+        const card = dom.getElementsByClassName('card');
+
+        if (card.length) {
+            document.getElementById('books_block_show').innerHTML = card[0].parentNode.innerHTML;
+        } else {
+            document.getElementById('books_block_show').innerHTML = dom.body.parentNode.innerHTML;
+        }
+    };
+
+    searchBar.addEventListener('input', debounce(booksSearching, 200));
+    searchSelect.addEventListener('change', booksSearching);
+</script>
 {% endblock %}
