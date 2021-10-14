@@ -9,6 +9,8 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/reservations")
@@ -18,6 +20,7 @@ class ReservationsController extends AbstractController
     /**
      * Allow a user to reserve a book
      *
+     * @IsGranted("ROLE_CUSTOMER"),
      * @Route("/reserve/{bookId}", name="book_reservation", methods={"GET","POST"}),
      */
     public function new(BooksRepository $booksRepository, int $bookId): Response
@@ -44,6 +47,7 @@ class ReservationsController extends AbstractController
     /**
      * Confirm the loan of a book
      *
+     * @IsGranted("ROLE_EMPLOYEE"),
      * @param BooksRepository $booksRepository
      * @param int $bookId
      * @return Response
@@ -70,6 +74,7 @@ class ReservationsController extends AbstractController
     /**
      * display the all the reservations
      *
+     * @IsGranted("ROLE_EMPLOYEE"),
      * @Route("/show_loanings", name="loanings_show", methods={"GET","POST"})
      */
     public function showLoaning(ReservationsRepository $reservationsRepository): Response
@@ -99,6 +104,7 @@ class ReservationsController extends AbstractController
     /**
      * display the reservations of one user
      *
+     * @IsGranted ("ROLE_CUSTOMER"),
      * @Route("/show_user_loanings", name="loanings_user_show", methods={"GET","POST"})
      */
     public function showUserLoaning(): Response
@@ -132,7 +138,7 @@ class ReservationsController extends AbstractController
     }
 
         /**
-         * Delete a book's reservation (the user had returned the book to the library)
+         * Delete a book's reservation (the user returned the book to the library)
          *
          * @Route("/delete/{reservationId}", name="delete_reservation", methods={"GET","POST"})
          */

@@ -37,13 +37,11 @@
 
                             {% if book.reservation.status == 'reserved' %}
                                 <p class="card-text text-warning">Réservé</p>
-                                <a
-                                        href="{{ path('book_loaning', {'bookId':book.id }) }}"
-                                        class="btn btn-warning text-light">Confirmer l'emprunt
+                                <a href="{{ path('book_loaning', {'bookId':book.id }) }}"
+                                    class="btn btn-warning text-light">Confirmer l'emprunt
                                 </a>
                             {% elseif book.reservation.status == 'borrowed' %}
                                 <p class="card-text text-danger">Emprunté</p>
-                                <a class="btn btn-success text-light">Confirmer le retour</a>
                             {% endif %}
                         {% endif %}
                     {% endif %}

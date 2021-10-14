@@ -6,6 +6,7 @@ use App\Entity\Customers;
 use App\Form\CustomersType;
 use App\PasswordHasher;
 use App\Repository\CustomersRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,6 +56,7 @@ class CustomersController extends AbstractController
     /**
      * Display the page where the employee can validate a new account
      *
+     * @IsGranted("ROLE_EMPLOYEE"),
      * @Route("/validationPage", name="customers_validation_page", methods={"GET","POST"}),
      */
     public function displayValidateCustomer(CustomersRepository $customersRepository): Response
@@ -68,6 +70,7 @@ class CustomersController extends AbstractController
     /**
      * Validate a new customer's account
      *
+     * @IsGranted("ROLE_EMPLOYEE"),
      * @Route("/validation/{customerId}", name="customers_validation", methods={"GET","POST"}),
      */
     public function validateCustomer(CustomersRepository $customersRepository, int $customerId): Response
@@ -78,12 +81,15 @@ class CustomersController extends AbstractController
         $entityManager->persist($customer);
         $entityManager->flush();
 
+        $this->addFlash('success', 'vous avez accepté le compte.');
+
         return $this->redirectToRoute('customers_validation_page');
     }
 
     /**
      * refuse a new customer's account
      *
+     * @IsGranted("ROLE_EMPLOYEE"),
      * @param Request $request
      * @param Customers $customer
      * @return Response
@@ -96,59 +102,8 @@ class CustomersController extends AbstractController
         $entityManager->remove($customerToDelete);
         $entityManager->flush();
 
+        $this->addFlash('danger', 'vous avez refusé le compte.');
+
         return $this->redirectToRoute('customers_validation_page');
-    }
-
-    /**
-     * Not used for now
-     *
-     * @param Customers $customer
-     * @return Response
-     * @Route ("/{id}", name="customers_show", methods={"GET"}),
-     */
-    public function show(Customers $customer): Response
-    {
-        return $this->render('customers/show.html.twig', [
-            'customer' => $customer,
-        ]);
-    }
-
-    /**
-     * not used for now
-     *
-     * @param Request $request
-     * @param Customers $customer
-     * @return Response
-     * @Route ("/{id}/edit", name="customers_edit", methods={"GET","POST"}),
-     */
-    public function edit(Request $request, Customers $customer): Response
-    {
-        $form = $this->createForm(CustomersType::class, $customer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('customers_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('customers/edit.html.twig', [
-            'customer' => $customer,
-            'form' => $form,
-        ]);
-    }
-
-    /**
-     * not used for now
-     *
-     * @param CustomersRepository $customersRepository
-     * @return Response
-     * @Route ("/", name="customers_index",  methods={"GET"}),
-     */
-    public function index(CustomersRepository $customersRepository): Response
-    {
-        return $this->render('customers/index.html.twig', [
-            'customers' => $customersRepository->findAll(),
-        ]);
     }
 }

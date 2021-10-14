@@ -6,7 +6,6 @@ use App\Entity\Books;
 use App\Entity\Customers;
 use App\Entity\Employees;
 use App\Entity\Reservations;
-use App\Entity\Users;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;

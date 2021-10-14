@@ -101,6 +101,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
     public function deletetest()
     {
-        dd('coucou');
+        dd('event delete called, change the text of deletest function in adminSubscriber');
     }
 }
