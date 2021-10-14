@@ -74,10 +74,8 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
         }
         else
         {
-            return 'cet utilisateur ne peut pas encore emprunter de livre';
+            return 'cet utilisateur ne peut pas emprunter de livre';
         }
-
-
     }
 
     public function getId(): ?int

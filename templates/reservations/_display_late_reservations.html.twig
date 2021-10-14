@@ -1,0 +1,26 @@
+<div class="card mb-3 border-danger">
+    <div class="row g-0">
+
+        <div class="col-md-4">
+            <img src="{{ asset('uploads/booksCover/' ~ userLateReservation.image) }}"
+                 class="img-fluid rounded-start"
+                 alt="image de couverture du livre">
+        </div>
+
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ userLateReservation.title }}</h5>
+                <p class="card-text">
+                    <small>
+                        {{ userLateReservation.literaryGenre }} |
+                        {{ userLateReservation.releaseDate|format_datetime('short', 'none', locale='fr') }} |
+                        {{ userLateReservation.author }}
+                    </small>
+                </p>
+                <p class="card-text">{{ userLateReservation.description }}</p>
+                <p class="card-text text-danger">Votre réservation a expiré</p>
+                <p class="text-danger">Réservation terminée depuis le : {{ userLateReservation.reservation.endDate|format_datetime('short', 'none', locale='fr') }},
+            </div>
+        </div>
+    </div>
+</div>

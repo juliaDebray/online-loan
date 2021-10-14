@@ -1,0 +1,30 @@
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ asset('uploads/booksCover/' ~ userBook.image) }}"
+                 class="img-fluid rounded-start"
+                 alt="image de couverture du livre">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ userBook.title }}</h5>
+                <p class="card-text">
+                    <small>
+                        {{ userBook.literaryGenre }} |
+                        {{ userBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
+                        {{ userBook.author }}
+                    </small>
+                </p>
+                <p class="card-text">{{ userBook.description }}</p>
+                {% if userBook.reservation.status == 'reserved' %}
+                    <p class="card-text text-success">Réservé</p>
+                    <p class="text-success">fin de la réservation le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
+                </p>
+                {% else %}
+                    <p class="card-text text-success">Emprunté</p>
+                    <p class="text-success">A rendre pour le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

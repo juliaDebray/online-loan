@@ -1,71 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des emprunts{% endblock %}
+{% block title %}Mes emprunts et réservations{% endblock %}
 
 {% block body %}
     <h1 class="text-center">Liste des emprunts</h1>
-    {% if userLateBooks %}
+    {% if userLateBooks or userBooks or userLateReservations %}
         {% for userLateBook in userLateBooks %}
-            <div class="card mb-3 border-danger">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="{{ asset('uploads/booksCover/' ~ userLateBook.image) }}"
-                             class="img-fluid rounded-start"
-                             alt="image de couverture du livre">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ userLateBook.title }}</h5>
-                            <p class="card-text">
-                                <small>
-                                    {{ userLateBook.literaryGenre }} |
-                                    {{ userLateBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
-                                    {{ userLateBook.author }}
-                                </small>
-                            </p>
-                            <p class="card-text">{{ userLateBook.description }}</p>
-                            {% if userLateBook.reservation.status == 'borrowed' %}
-                                <p class="card-text text-danger">Emprunté</p>
-                                <p class="text-danger">A rendre pour le : {{ userLateBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
-                            {% else %}
-                                <p class="card-text text-danger">Votre réservation est terminée, vous ne pouvez plus emprunter ce livre.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{ include('reservations/_display_late_loan.html.twig') }}
         {% endfor %}
+        {% for userLateReservation in userLateReservations %}
+            {{ include('reservations/_display_late_reservations.html.twig') }}
+        {% endfor %}
+        {% for userBook in userBooks %}
+            {{ include('reservations/_display_loan.html.twig') }}
+        {% endfor %}
+    {% else %}
+        <p>Vous n'avez pas de réservation ou de livre emprunté en cours.</p>
     {% endif %}
-    {% for userBook in userBooks %}
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{ asset('uploads/booksCover/' ~ userBook.image) }}"
-                         class="img-fluid rounded-start"
-                         alt="image de couverture du livre">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ userBook.title }}</h5>
-                        <p class="card-text">
-                            <small>
-                                {{ userBook.literaryGenre }} |
-                                {{ userBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
-                                {{ userBook.author }}
-                            </small>
-                        </p>
-                        <p class="card-text">{{ userBook.description }}</p>
-                        {% if userBook.reservation.status == 'reserved' %}
-                            <p class="card-text text-success">Réservé</p>
-                            <p class="text-success">fin de la réservation le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
-                            </p>
-                        {% else %}
-                            <p class="card-text text-success">Emprunté</p>
-                            <p class="text-success">A rendre pour le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
 {% endblock %}

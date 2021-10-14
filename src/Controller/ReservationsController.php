@@ -114,12 +114,16 @@ class ReservationsController extends AbstractController
         $now = new DateTime();
         $userLateBooks = [];
         $userBooks = [];
+        $userLateReservations = [];
 
         foreach ($userReservations as $userReservation)
         {
-            if($userReservation->getEndDate() < $now )
+            if($userReservation->getEndDate() < $now && $userReservation->getStatus() == 'borrowed')
             {
                 array_push($userLateBooks, $userReservation->getBook());
+            } elseif ($userReservation->getEndDate() < $now && $userReservation->getStatus() == 'reserved')
+            {
+                array_push($userLateReservations, $userReservation->getBook());
             } else {
                 array_push($userBooks, $userReservation->getBook());
             }
@@ -133,7 +137,8 @@ class ReservationsController extends AbstractController
         return $this->render('/reservations/showUserReservations.html.twig',
         [
             'userLateBooks' => $userLateBooks,
-            'userBooks' => $userBooks
+            'userBooks' => $userBooks,
+            'userLateReservations' => $userLateReservations
         ]);
     }
 
