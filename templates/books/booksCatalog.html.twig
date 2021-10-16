@@ -2,16 +2,16 @@
 
 {% block title %}Books index{% endblock %}
 
-{% block body %}
+{% block main %}
 
-<div class="container border">
-    <h1 class="text-center m-3">Bibliothèque</h1>
+<div class="container border bg-dark mw-100 p-sm-5">
+    <h1 class="text-center m-3 text-light">Bibliothèque</h1>
 
-    <div class="input-group">
-        <div class="form-outline my-2">
-            <input id="search-focus" type="search" class="form-control" placeholder="recherche" />
+    <div class="input-group px-lg-5 ">
+        <div class="form-outline my-2 w-100 d-flex flex-row gap-1">
+            <input id="search-focus" type="search" class="form-control mw-50" placeholder="recherche par titre" />
             <label class="form-label" for="search-focus"></label>
-            <select id="search-select" class="form-select" aria-label="Default select example">
+            <select id="search-select" class="form-select col-sm-2" aria-label="Default select example">
                 <option selected value="">Genre</option>
                 <option>Polar</option>
                 <option>Fantastique</option>
@@ -20,8 +20,14 @@
         </div>
     </div>
 
-    <div id="books_block_show">
-       {% include('books/_books_template.html.twig') %}
+    <div id="books_block_show" class="w-100 p-lg-5 d-flex flex-wrap justify-content-between">
+        {% if books %}
+            {% for book in books %}
+                {% include('books/_books_template.html.twig') %}
+            {% endfor %}
+        {% else %}
+            <p>Aucun livre ne répond à vos critères</p>
+        {% endif %}
     </div>
 </div>
 

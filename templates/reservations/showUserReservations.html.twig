@@ -2,19 +2,23 @@
 
 {% block title %}Mes emprunts et réservations{% endblock %}
 
-{% block body %}
-    <h1 class="text-center">Liste des emprunts</h1>
-    {% if userLateBooks or userBooks or userLateReservations %}
-        {% for userLateBook in userLateBooks %}
-            {{ include('reservations/_display_late_loan.html.twig') }}
-        {% endfor %}
-        {% for userLateReservation in userLateReservations %}
-            {{ include('reservations/_display_late_reservations.html.twig') }}
-        {% endfor %}
-        {% for userBook in userBooks %}
-            {{ include('reservations/_display_loan.html.twig') }}
-        {% endfor %}
-    {% else %}
-        <p>Vous n'avez pas de réservation ou de livre emprunté en cours.</p>
-    {% endif %}
+{% block main %}
+    <div class="container border bg-dark mw-100 p-sm-5">
+        <h1 class="text-center m-3 text-light">Mes emprunts et Réservations</h1>
+            <div class="w-100 p-lg-5 d-flex flex-wrap justify-content-between">
+            {% if userLateBooks or userBooks or userLateReservations %}
+            {% for userLateBook in userLateBooks %}
+                {{ include('reservations/_display_late_loan.html.twig') }}
+            {% endfor %}
+            {% for userLateReservation in userLateReservations %}
+                {{ include('reservations/_display_late_reservations.html.twig') }}
+            {% endfor %}
+            {% for userBook in userBooks %}
+                {{ include('reservations/_display_loan.html.twig') }}
+            {% endfor %}
+        {% else %}
+            <p>Vous n'avez pas de réservation ou de livre emprunté en cours.</p>
+        {% endif %}
+        </div>
+    </div>
 {% endblock %}

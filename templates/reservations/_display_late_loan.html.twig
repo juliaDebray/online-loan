@@ -1,26 +1,49 @@
-<div class="card mb-3 border-danger">
+<div class="card mb-3 col-md-12 col-lg-6 p-0">
     <div class="row g-0">
-
-        <div class="col-md-4">
+        <div class="col-sm-2 col-xl-3">
             <img src="{{ asset('uploads/booksCover/' ~ userLateBook.image) }}"
-                 class="img-fluid rounded-start"
+                 class="img-fluid rounded-start w-100"
                  alt="image de couverture du livre">
         </div>
+        <div class="col-sm-10 col-xl-9">
+            {% if userLateBook.reservation %}
 
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">{{ userLateBook.title }}</h5>
-                <p class="card-text">
-                    <small>
-                        {{ userLateBook.literaryGenre }} |
-                        {{ userLateBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
-                        {{ userLateBook.author }}
-                    </small>
-                </p>
-                <p class="card-text">{{ userLateBook.description }}</p>
-                <p class="card-text text-danger">Emprunté</p>
-                <p class="text-danger">A rendre pour le : {{ userLateBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}
+                    <div class="card_header color_borrowed" class="card-header rounded-0 text-light d-flex justify-content-between">
+                        <p class="m-0 p-0">Emprunté</p>
+                        <p class="m-0 p-0">A rendre pour le : {{ userLateBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
+                    </div>
+                {% endif %}
+
+            <div class="container">
+                <div class="card-body row">
+
+                    <div class="col-8">
+                        <h5 class="card-title">{{ userLateBook.title }}</h5>
+                        <p class="card-text m-0 p-0">
+                            <small>
+                                {{ userLateBook.literaryGenre }} |
+                                {{ userLateBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
+                                {{ userLateBook.author }}
+                            </small>
+                        </p>
+                        <p class="card-text m-0 p-0">{{ userLateBook.description }}</p>
+                        {% if is_granted("ROLE_EMPLOYEE") %}
+                            <p>Emprunté par : {{ userLateBook.reservation.user.fullname }} </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-4">
+                        {% if userLateBook.reservation %}
+                            <p class="text-danger">EN RETARD</p>
+                            {% if is_granted('ROLE_EMPLOYEE') %}
+                                <a class="btn btn-success text-light position-absolute bottom-0 end-0" href="{{ path('delete_reservation', { 'reservationId': userLateBook.reservation.id }) }}">Confirmer le retour</a>
+                            {% endif%}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+

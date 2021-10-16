@@ -1,26 +1,40 @@
-<div class="card mb-3 border-danger">
+<div class="card mb-3 col-md-12 col-lg-6 p-0">
     <div class="row g-0">
-
-        <div class="col-md-4">
+        <div class="col-sm-2 col-xl-3">
             <img src="{{ asset('uploads/booksCover/' ~ userLateReservation.image) }}"
-                 class="img-fluid rounded-start"
+                 class="img-fluid rounded-start w-100"
                  alt="image de couverture du livre">
         </div>
-
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">{{ userLateReservation.title }}</h5>
-                <p class="card-text">
-                    <small>
-                        {{ userLateReservation.literaryGenre }} |
-                        {{ userLateReservation.releaseDate|format_datetime('short', 'none', locale='fr') }} |
-                        {{ userLateReservation.author }}
-                    </small>
-                </p>
-                <p class="card-text">{{ userLateReservation.description }}</p>
-                <p class="card-text text-danger">Votre réservation a expiré</p>
-                <p class="text-danger">Réservation terminée depuis le : {{ userLateReservation.reservation.endDate|format_datetime('short', 'none', locale='fr') }},
+        <div class="col-sm-10 col-xl-9">
+            <div class="card_header color_reserved" class="card-header rounded-0 text-light d-flex justify-content-between">
+                <p class="m-0 p-0">Réservé</p>
+                <p class="m-0 p-0">Retour prévu le : {{ userLateReservation.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
             </div>
+            <div class="container">
+                <div class="card-body row">
+
+                    <div class="col-8">
+                        <h5 class="card-title">{{ userLateReservation.title }}</h5>
+                        <p class="card-text m-0 p-0">
+                            <small>
+                                {{ userLateReservation.literaryGenre }} |
+                                {{ userLateReservation.releaseDate|format_datetime('short', 'none', locale='fr') }} |
+                                {{ userLateReservation.author }}
+                            </small>
+                        </p>
+                        <p class="card-text m-0 p-0">{{ userLateReservation.description }}</p>
+                    </div>
+
+                    <div class="col-4">
+                        {% if userLateReservation.reservation %}
+                            <p class="card-text text-danger">Votre réservation a expiré</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
+

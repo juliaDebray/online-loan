@@ -2,62 +2,21 @@
 
 {% block title %}Liste des emprunts{% endblock %}
 
-{% block body %}
-    <h1 class="text-center">Liste des emprunts</h1>
-    {% if lateBooks %}
-        {% for lateBook in lateBooks %}
-            <div class="card mb-3 border-danger">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="{{ asset('uploads/booksCover/' ~ lateBook.image) }}"
-                             class="img-fluid rounded-start"
-                             alt="image de couverture du livre">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ lateBook.title }}</h5>
-                            <p class="card-text">
-                                <small>
-                                    {{ lateBook.literaryGenre }} |
-                                    {{ lateBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
-                                    {{ lateBook.author }}
-                                </small>
-                            </p>
-                            <p class="card-text">{{ lateBook.description }}</p>
-                            <p class="text-danger">Date de retour : {{ lateBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
-                            <p>Emprunté par : {{ lateBook.reservation.user.fullname }} </p>
-                            <a class="btn btn-success text-light">Confirmer le retour</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
-    {% for book in books %}
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{ asset('uploads/booksCover/' ~ book.image) }}"
-                         class="img-fluid rounded-start"
-                         alt="image de couverture du livre">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ book.title }}</h5>
-                        <p class="card-text">
-                            <small>
-                                {{ book.literaryGenre }} |
-                                {{ book.releaseDate|format_datetime('short', 'none', locale='fr') }} |
-                                {{ book.author }}
-                            </small>
-                        </p>
-                        <p class="card-text">{{ book.description }}</p>
-                        <p class="text-success">Date de retour : {{ book.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
-                        <p>Emprunté par : {{ book.reservation.user.fullname }}</p>
-                        <a class="btn btn-success text-light" href="{{ path('delete_reservation', { 'reservationId': book.reservation.id }) }}">Confirmer le retour</a>
-                    </div>
-                </div>
-            </div>
+{% block main %}
+<div class="container border bg-dark mw-100 p-sm-5">
+    <h1 class="text-center m-3 text-light">Liste des emprunts</h1>
+    <div class="w-100 p-lg-5 d-flex flex-wrap justify-content-between">
+        {% if lateBooks %}
+            {% for userLateBook in lateBooks %}
+                {% include('reservations/_display_late_loan.html.twig') %}
+            {% endfor %}
+        {% endif %}
+        {% if books %}
+            {% for userBook in books %}
+                {% include('reservations/_display_loan.html.twig') %}
+            {% endfor %}
+        {% endif %}
         </div>
-    {% endfor %}
+    </div>
+
 {% endblock %}

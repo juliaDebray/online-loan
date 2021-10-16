@@ -1,0 +1,38 @@
+html, body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+main {
+    flex-grow: 1;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.card_header {
+
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding: 10px;
+}
+
+.color_borrowed {
+    background-color: #ff5c09;
+}
+
+.color_disponible {
+    background-color: #027c4c;
+}
+
+.color_reserved {
+    background-color: #7250ff;
+}
+
+.color_page {
+    background-color: rgba(170,159,112,0.69);
+}

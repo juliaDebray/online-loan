@@ -21,6 +21,7 @@ final class Version20211011080018 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE books DROP status');
+        $this->addSql('INSERT');
     }
 
     public function down(Schema $schema): void
