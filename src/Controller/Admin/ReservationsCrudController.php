@@ -21,25 +21,14 @@ class ReservationsCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        if (Crud::PAGE_NEW == $pageName) {
-            return [
-                TextField::new('status'),
-                AssociationField::new('book')->setFormattedValue(function ($value) {
-                    return $value . ' lol';
-                }),
-                AssociationField::new('User'),
-            ];
-        }
+        return [
+            IntegerField::new('id', 'Id'),
+            TextField::new('status'),
+            AssociationField::new('book'),
+            AssociationField::new('User'),
+//            DateTimeField::new('start_date', 'Date de début'),
+//            DateTimeField::new('end_date', 'Date de fin'),
+        ];
 
-        if (Crud::PAGE_INDEX == $pageName) {
-            return [
-                IntegerField::new('id', 'Id'),
-                TextField::new('status'),
-                AssociationField::new('book'),
-                AssociationField::new('User'),
-                DateTimeField::new('start_date', 'Date de début'),
-                DateTimeField::new('end_date', 'Date de fin'),
-            ];
-        }
     }
 }
