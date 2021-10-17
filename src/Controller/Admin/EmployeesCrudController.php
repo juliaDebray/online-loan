@@ -32,7 +32,6 @@ class EmployeesCrudController extends AbstractCrudController
     {
         return [
             TextField::new('email'),
-//            FormField::addPanel('Change password')->setIcon('fa fa-key'),
             Field::new('password')->onlyOnForms()
                 ->setFormType(RepeatedType::class)
                 ->setFormTypeOptions([
