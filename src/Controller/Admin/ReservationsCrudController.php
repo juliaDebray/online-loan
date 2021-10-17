@@ -26,8 +26,8 @@ class ReservationsCrudController extends AbstractCrudController
             TextField::new('status'),
             AssociationField::new('book'),
             AssociationField::new('User'),
-//            DateTimeField::new('start_date', 'Date de début'),
-//            DateTimeField::new('end_date', 'Date de fin'),
+            DateTimeField::new('start_date', 'Date de début'),
+            DateTimeField::new('end_date', 'Date de fin'),
         ];
 
     }
