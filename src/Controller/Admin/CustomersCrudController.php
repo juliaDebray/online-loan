@@ -30,7 +30,7 @@ class CustomersCrudController extends AbstractCrudController
                 ]),
             TextField::new('firstname')->setFormTypeOptions(['label'=>'Prénom']),
             TextField::new('lastname')->setFormTypeOptions(['label'=>'Nom de famille']),
-//            DateTimeField::new('birthdate')->setFormTypeOptions(['label'=>'Date de naissance']),
+            DateTimeField::new('birthdate')->setFormTypeOptions(['label'=>'Date de naissance']),
             TextField::new('address')->setFormTypeOptions(['label'=>'Adresse']),
             TextField::new('zipcode')->setFormTypeOptions(['label'=>'Code postal']),
             TextField::new('city')->setFormTypeOptions(['label'=>'Ville']),
