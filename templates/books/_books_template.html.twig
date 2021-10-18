@@ -7,14 +7,12 @@
         </div>
         <div class="col-sm-10 col-xl-9">
             {% if book.reservation %}
-
                 {% if book.reservation.status == 'reserved' %}
                     <div class="card_header color_reserved" class="card-header rounded-0 text-light d-flex justify-content-between">
                         <p class="m-0 p-0">Réservé</p>
                         <p class="m-0 p-0">Retour prévu le : {{ book.reservation.endDate|format_datetime('short', 'none', locale='en') }}</p>
                     </div>
                 {% else %}
-
                     <div class="card_header color_borrowed" class="card-header rounded-0 text-light d-flex justify-content-between">
                         <p class="m-0 p-0">Emprunté</p>
                         <p class="m-0 p-0">Retour prévu le : {{ book.reservation.endDate|format_datetime('short', 'none', locale='en') }}</p>
@@ -25,7 +23,6 @@
                     <p class="m-0 p-0 m-0 p-0">Disponible</p>
                 </div>
             {% endif %}
-
             <div class="container">
                 <div class="card-body row">
 
@@ -40,7 +37,6 @@
                         </p>
                         <p class="card-text m-0 p-0">{{ book.description }}</p>
                     </div>
-
                     <div class="col-4">
                         {% if book.reservation %}
                             {% if is_granted('ROLE_EMPLOYEE') %}
@@ -58,7 +54,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

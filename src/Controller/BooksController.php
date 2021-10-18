@@ -42,7 +42,7 @@ class BooksController extends AbstractController
     {
         $books = $booksRepository->likeBy($title, $type);
 
-        return $this->render('books/_books_template.html.twig', ['books' => $books]);
+        return $this->render('books/booksCatalog.html.twig', ['books' => $books]);
     }
 
     /**
@@ -56,7 +56,7 @@ class BooksController extends AbstractController
     {
         $type = null;
         $books = $booksRepository->likeBy($title, $type);
-        return $this->render('books/_books_template.html.twig', ['books' => $books]);
+        return $this->render('books/booksCatalog.html.twig', ['books' => $books]);
     }
 
     /**

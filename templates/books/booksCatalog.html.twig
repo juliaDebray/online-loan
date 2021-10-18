@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Books index{% endblock %}
+{% block title %} Bibliothèque {% endblock %}
 
 {% block main %}
 
@@ -52,7 +52,6 @@
 
     const searchBar = document.getElementById('search-focus');
     const searchSelect = document.getElementById('search-select');
-    const textHere = document.getElementById('textHere');
 
     const getTargetValues = () => {
         const bookTitle = searchBar.value;
@@ -66,12 +65,10 @@
             url = '{{ path('books_search', {'title': 'title', 'type': 'type'}) }}';
             url = url.replace('title', encodeURIComponent(bookTitle));
             url = url.replace('type', encodeURIComponent(bookType));
-
         } else if (bookType &&  !bookTitle) {
             url = '{{ path('books_search', {'title': 'title', 'type': 'type'}) }}';
             url = url.replace('title', encodeURIComponent(bookTitle || ''));
             url = url.replace('type', encodeURIComponent(bookType));
-
         } else{
             url = '{{ path('books_search_by_title', {'title': 'title'}) }}';
             url = url.replace('title', encodeURIComponent(bookTitle));
