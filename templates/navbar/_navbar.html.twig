@@ -1,0 +1,66 @@
+{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="{{ path('home_page') }}">Médiathèque en ligne</a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarText"
+                aria-controls="navbarText"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin') }}">Panneau d'administration</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link {{ currentPath == path('books_catalog') ? 'active' : '' }}" href="{{ path('books_catalog') }}">Bibliothèque</a>
+                    </li>
+                    {% if is_granted('ROLE_CUSTOMER') %}
+                        <li class="nav-item">
+                            <a class="nav-link" {{ currentPath == path('loanings_user_show') ? 'active' : '' }}" href="{{ path('loanings_user_show') }}">Mes emprunts</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_EMPLOYEE') %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ currentPath == path('loanings_show') ? 'active' : '' }}" href="{{ path('loanings_show') }}">Les emprunts en cours</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_EMPLOYEE') %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ currentPath == path('customers_validation_page') ? 'active' : '' }}" href="{{ path('customers_validation_page') }}">Demandes de compte</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_EMPLOYEE') %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ currentPath == path('books_new') ? 'active' : '' }}" href="{{ path('books_new') }}">Ajouter un livre</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                    <li class="nav-item text-light">
+                        {{ app.user.username }}
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {{ currentPath == path('app_login') ? 'active' : '' }}" href="{{ path('app_login') }}">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ currentPath == path('customers_new') ? 'active' : '' }}" href="{{ path('customers_new') }}">Inscritpion</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
