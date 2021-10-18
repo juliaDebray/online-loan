@@ -3,8 +3,8 @@
 {% block title %}Mes emprunts et réservations{% endblock %}
 
 {% block main %}
-    <div class="container border bg-dark mw-100 p-sm-5">
-        <h1 class="text-center m-3 text-light">Mes emprunts et Réservations</h1>
+    <div class="container mw-100 p-sm-5">
+        <h1 class="text-center m-3">Mes emprunts et Réservations</h1>
             <div class="w-100 p-lg-5 d-flex flex-wrap justify-content-between">
             {% if userLateBooks or userBooks or userLateReservations %}
             {% for userLateBook in userLateBooks %}

@@ -4,8 +4,8 @@
 
 {% block main %}
 
-<div class="container border bg-dark mw-100 p-sm-5">
-    <h1 class="text-center m-3 text-light">Bibliothèque</h1>
+<div class="container mw-100 p-sm-5">
+    <h1 class="text-center m-3">Bibliothèque</h1>
 
     <div class="input-group px-lg-5 ">
         <div class="form-outline my-2 w-100 d-flex flex-row gap-1">
@@ -20,13 +20,13 @@
         </div>
     </div>
 
-    <div id="books_block_show" class="w-100 p-lg-5 d-flex flex-wrap justify-content-between text-light">
+    <div id="books_block_show" class="w-100 p-lg-5 d-flex flex-wrap justify-content-between">
         {% if books %}
             {% for book in books %}
                 {% include('books/_books_template.html.twig') %}
             {% endfor %}
         {% else %}
-            <p class="text-light">Aucun livre ne répond à vos critères</p>
+            <p >Aucun livre ne répond à vos critères</p>
         {% endif %}
     </div>
 </div>

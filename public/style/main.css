@@ -2,7 +2,6 @@ html, body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: #0c4a6e;
 }
 
 main {
@@ -32,8 +31,4 @@ p {
 
 .color_reserved {
     background-color: #7250ff;
-}
-
-.color_page {
-    background-color: rgba(170,159,112,0.69);
 }
