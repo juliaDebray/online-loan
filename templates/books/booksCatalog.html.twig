@@ -20,13 +20,13 @@
         </div>
     </div>
 
-    <div id="books_block_show" class="w-100 p-lg-5 d-flex flex-wrap justify-content-between">
+    <div id="books_block_show" class="w-100 p-lg-5 d-flex flex-wrap justify-content-between text-light">
         {% if books %}
             {% for book in books %}
                 {% include('books/_books_template.html.twig') %}
             {% endfor %}
         {% else %}
-            <p>Aucun livre ne répond à vos critères</p>
+            <p class="text-light">Aucun livre ne répond à vos critères</p>
         {% endif %}
     </div>
 </div>
@@ -87,8 +87,9 @@
 
         if (card.length) {
             document.getElementById('books_block_show').innerHTML = card[0].parentNode.innerHTML;
-        } else {
-            document.getElementById('books_block_show').innerHTML = dom.body.parentNode.innerHTML;
+        }
+        else {
+            document.getElementById('books_block_show').innerHTML = "Aucun livre ne répond à vos critères";
         }
     };
 
