@@ -8,6 +8,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * this command is created fo a future cron job implementation
+ */
+
 class ReservationsCleanupCommand extends Command
 {
     private $reservationsRepository;

@@ -21,23 +21,24 @@ class ReservationsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
+     * this code wil be used in a future cron jobs implementation
+     *
+     * @return int
      */
     public function countOldReservations(): int
     {
-        return $this->getOldReservations()->select('COUNT(r.id)')->getQuery()->getSingleScalarResult();
+        return $this->getDelayedReservations()->select('COUNT(r.id)')->getQuery()->getSingleScalarResult();
     }
 
     public function deleteOldReservations(): int
     {
-            return $this->getOldReservations()->delete()->getQuery()->execute();
+            return $this->getDelayedReservations()->delete()->getQuery()->execute();
     }
 
-    private function getOldReservations(): QueryBuilder
+    public function getDelayedReservations(): QueryBuilder
     {
             return $this->createQueryBuilder('r')
-                ->andWhere('r.endDate >= :date')
+                ->andWhere('r.endDate <= :date')
                 ->andWhere('r.status = :status')
                 ->setParameters([
                     'date' => new \DateTime('now'),

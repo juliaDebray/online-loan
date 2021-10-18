@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Customers;
+use App\Repository\CustomersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -33,7 +34,7 @@ class CustomerService extends AbstractController
         $this->addFlash('success', 'vous avez accepté le compte.');
     }
 
-    public function refuseCustomer($customersRepository, int $customerId)
+    public function refuseCustomer(CustomersRepository $customersRepository, int $customerId)
     {
         $customerToDelete = $customersRepository->find($customerId);
         $entityManager = $this->getDoctrine()->getManager();

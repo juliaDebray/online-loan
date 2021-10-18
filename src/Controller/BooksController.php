@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Books;
 use App\Form\BooksType;
 use App\Repository\BooksRepository;
+use App\Service\BookService;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,28 +68,16 @@ class BooksController extends AbstractController
      * @return Response
      * @Route("/new", name="books_new", methods={"GET","POST"}),
      */
-    public function new(Request $request, FileUploader $fileUploader): Response
+    public function new(Request $request, FileUploader $fileUploader, BookService $bookService): Response
     {
         $book = new Books();
         $form = $this->createForm(BooksType::class, $book);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $bookService->makeBook($fileUploader, $form, $book);
 
-            $imageFile = $form['image']->getData();
-
-            if($imageFile) {
-                $fileName = $fileUploader->upload($imageFile);
-                $book->setImage($fileName);
-            } else {
-                $book->setImage('default_cover.jpg');
-            }
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($book);
-            $entityManager->flush();
-
-            $this->addFlash('success','Le livre a été ajouté au catalogue');
             return $this->redirectToRoute('books_new');
         }
 

@@ -6,6 +6,7 @@ use App\Entity\Customers;
 use App\Form\CustomersType;
 use App\PasswordHasher;
 use App\Repository\CustomersRepository;
+use App\Service\CustomerService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,24 +26,17 @@ class CustomersController extends AbstractController
      * @return Response
      * @Route ("/new", name="customers_new", methods={"GET","POST"}),
      */
-    public function new(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request,
+                        UserPasswordHasherInterface $passwordHasher,
+                        CustomerService $customerService): Response
     {
         $customer = new Customers();
         $form = $this->createForm(CustomersType::class, $customer);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $customer->setRoles(['ROLE_CUSTOMER']);
-            $customer->setStatus('pending');
-            $customer->setPassword
-            (
-                $passwordHasher->hashPassword( $customer, $customer->getPassword() )
-            );
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($customer);
-            $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $customerService->makeCustomer($customer, $passwordHasher);
 
             return $this->redirectToRoute('app_login');
         }
@@ -73,15 +67,11 @@ class CustomersController extends AbstractController
      * @IsGranted("ROLE_EMPLOYEE"),
      * @Route("/validation/{customerId}", name="customers_validation", methods={"GET","POST"}),
      */
-    public function validateCustomer(CustomersRepository $customersRepository, int $customerId): Response
+    public function validateCustomer(CustomersRepository $customersRepository,
+                                     int $customerId,
+                                     CustomerService $customerService): Response
     {
-        $customer = $customersRepository->find($customerId);
-        $customer->setStatus('validated');
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($customer);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'vous avez accepté le compte.');
+        $customerService->validateCustomer($customersRepository, $customerId);
 
         return $this->redirectToRoute('customers_validation_page');
     }
@@ -95,14 +85,11 @@ class CustomersController extends AbstractController
      * @return Response
      * @Route ("/refuse/{customerId}", name="customers_delete", methods={"GET","POST"}),
      */
-    public function delete(CustomersRepository $customersRepository, int $customerId): Response
+    public function delete(CustomersRepository $customersRepository,
+                           int $customerId,
+                           CustomerService $customerService): Response
     {
-        $customerToDelete = $customersRepository->find($customerId);
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($customerToDelete);
-        $entityManager->flush();
-
-        $this->addFlash('danger', 'vous avez refusé le compte.');
+        $customerService->refuseCustomer($customersRepository, $customerId);
 
         return $this->redirectToRoute('customers_validation_page');
     }

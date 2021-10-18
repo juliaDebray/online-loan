@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservations;
 use App\Repository\BooksRepository;
 use App\Repository\ReservationsRepository;
+use App\Service\ReservationService;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,23 +24,13 @@ class ReservationsController extends AbstractController
      * @IsGranted("ROLE_CUSTOMER"),
      * @Route("/reserve/{bookId}", name="book_reservation", methods={"GET","POST"}),
      */
-    public function new(BooksRepository $booksRepository, int $bookId): Response
+    public function new(BooksRepository $booksRepository,
+                        int $bookId,
+                        ReservationService $reservationService): Response
     {
-        $book = $booksRepository->find($bookId);
-        $startDate = new DateTime('now');
-        $endDate = new DateTime('now');
-        $endDate->modify('+3 day');
-
-        $reservation = new Reservations();
-        $reservation->setBook($book);
-        $reservation->setUser($this->getUser());
-        $reservation->setStartDate($startDate);
-        $reservation->setEndDate($endDate);
-        $reservation->setStatus('reserved');
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($reservation);
-        $entityManager->flush();
+        $duration = '+3 day';
+        $status = 'reserved';
+        $reservationService->makeOrEditReservation($booksRepository, $bookId, $duration, $status);
 
         return $this->redirectToRoute('books_catalog');
     }
@@ -53,20 +44,13 @@ class ReservationsController extends AbstractController
      * @return Response
      * @Route("/edit/{bookId}", name="book_loaning", methods={"GET","POST"})
      */
-    public function setLoaning(BooksRepository $booksRepository, int $bookId): Response
+    public function setLoaning(BooksRepository $booksRepository,
+                               int $bookId,
+                               ReservationService $reservationService): Response
     {
-        $book = $booksRepository->find($bookId);
-        $reservation = $book->getReservation();
-
-        $startDate = new DateTime('now');
-        $endDate = new DateTime('now');
-        $endDate->modify('+21 day');
-
-        $reservation->setStatus('borrowed');
-        $reservation->setStartDate($startDate);
-        $reservation->setEndDate($endDate);
-
-        $this->getDoctrine()->getManager()->flush();
+        $duration = '+21 day';
+        $status = 'borrowed';
+        $reservationService->makeOrEditReservation($booksRepository, $bookId, $duration, $status);
 
         return $this->redirectToRoute('books_catalog');
     }
@@ -77,28 +61,12 @@ class ReservationsController extends AbstractController
      * @IsGranted("ROLE_EMPLOYEE"),
      * @Route("/show_loanings", name="loanings_show", methods={"GET","POST"})
      */
-    public function showLoaning(ReservationsRepository $reservationsRepository): Response
+    public function showLoaning(ReservationsRepository $reservationsRepository,
+                                ReservationService $reservationService): Response
     {
-        $reservations = $reservationsRepository->findBy(['status'=>'borrowed']);
+        $reservations = $reservationService->getAllReservations($reservationsRepository);
 
-        $books = [];
-        $lateBooks = [];
-        $now = new DateTime();
-
-        foreach($reservations as $reservation)
-        {
-            if($reservation->getEndDate() < $now)
-            {
-                array_push($lateBooks, $reservation->getBook());
-            } else {
-                array_push($books, $reservation->getBook());
-            }
-        }
-
-        return $this->render('/reservations/showAll.html.twig', [
-            'lateBooks' => $lateBooks,
-            'books' => $books,
-        ]);
+        return $this->render('/reservations/showAll.html.twig', $reservations);
     }
 
     /**
@@ -107,39 +75,11 @@ class ReservationsController extends AbstractController
      * @IsGranted ("ROLE_CUSTOMER"),
      * @Route("/show_user_loanings", name="loanings_user_show", methods={"GET","POST"})
      */
-    public function showUserLoaning(): Response
+    public function showUserLoaning(ReservationService $reservationService): Response
     {
-        $user = $this->getUser();
-        $userReservations = $user->getReservations();
-        $now = new DateTime();
-        $userLateBooks = [];
-        $userBooks = [];
-        $userLateReservations = [];
+        $userReservations = $reservationService->getUserReservations();
 
-        foreach ($userReservations as $userReservation)
-        {
-            if($userReservation->getEndDate() < $now && $userReservation->getStatus() == 'borrowed')
-            {
-                array_push($userLateBooks, $userReservation->getBook());
-            } elseif ($userReservation->getEndDate() < $now && $userReservation->getStatus() == 'reserved')
-            {
-                array_push($userLateReservations, $userReservation->getBook());
-            } else {
-                array_push($userBooks, $userReservation->getBook());
-            }
-        }
-
-        if(!empty($userLateBooks))
-        {
-            $this->addFlash('warning',' Attention : Vous devez rendre les livres en retard !');
-        }
-
-        return $this->render('/reservations/showUserReservations.html.twig',
-        [
-            'userLateBooks' => $userLateBooks,
-            'userBooks' => $userBooks,
-            'userLateReservations' => $userLateReservations
-        ]);
+        return $this->render('/reservations/showUserReservations.html.twig', $userReservations);
     }
 
         /**
@@ -147,13 +87,11 @@ class ReservationsController extends AbstractController
          *
          * @Route("/delete/{reservationId}", name="delete_reservation", methods={"GET","POST"})
          */
-        public function delete(ReservationsRepository $reservationsRepository, int $reservationId): Response
+        public function delete(ReservationsRepository $reservationsRepository,
+                               int $reservationId,
+                               ReservationService $reservationService): Response
         {
-            $reservationToDelete = $reservationsRepository->find($reservationId);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($reservationToDelete);
-            $entityManager->flush();
+            $reservationService->deleteReservation($reservationsRepository, $reservationId);
 
             return $this->redirectToRoute('loanings_show');
         }
