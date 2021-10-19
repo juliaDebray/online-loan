@@ -17,7 +17,6 @@ class CustomerService extends AbstractController
         (
             $passwordHasher->hashPassword( $customer, $customer->getPassword() )
         );
-
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($customer);
         $entityManager->flush();

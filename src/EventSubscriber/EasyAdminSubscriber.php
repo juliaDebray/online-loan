@@ -28,7 +28,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         return [
             BeforeEntityPersistedEvent::class => ['addEntity'],
             BeforeEntityUpdatedEvent::class => ['updateEntity'],
-            BeforeEntityDeletedEvent::class => ['deletetest']
         ];
     }
 
@@ -97,10 +96,5 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         $entity->setEndDate($endDate);
-    }
-
-    public function deletetest()
-    {
-        dd('event delete called, change the text of deletest function in adminSubscriber');
     }
 }

@@ -22,7 +22,6 @@ class ReservationsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IntegerField::new('id', 'Id'),
             TextField::new('status'),
             AssociationField::new('book'),
             AssociationField::new('User'),

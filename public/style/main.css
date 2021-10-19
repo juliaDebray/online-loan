@@ -1,4 +1,6 @@
+
 html, body {
+
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -14,7 +16,6 @@ p {
 }
 
 .card_header {
-
     display: flex;
     justify-content: space-between;
     color: white;
@@ -31,4 +32,17 @@ p {
 
 .color_reserved {
     background-color: #7250ff;
+}
+
+.application_title{
+    font-family: 'Sail', cursive;
+}
+
+.nav_title{
+    font-family: 'Play', sans-serif;
+}
+
+.title{
+    font-family: 'Play', sans-serif;
+    font-weight: bolder;
 }

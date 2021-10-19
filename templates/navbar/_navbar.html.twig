@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <div class="container-fluid">
 
-        <a class="navbar-brand" href="{{ path('home_page') }}">Médiathèque en ligne</a>
+        <a class="navbar-brand application_title" href="{{ path('home_page') }}">OnlineThèque</a>
 
         <button class="navbar-toggler"
                 type="button"
@@ -15,7 +15,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarText">
+        <div class="nav_title collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
