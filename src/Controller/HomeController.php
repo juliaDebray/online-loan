@@ -18,7 +18,11 @@ class HomeController extends AbstractController
     public function HomePage(ReservationService $reservationService,
                              ReservationsRepository $reservationsRepository) : Response
     {
-        $reservationService->cleanDelayedReservations($reservationsRepository);
+        $identifiedUser = $this->getUser();
+
+        if(isset($identifiedUser)) {
+            $reservationService->cleanDelayedReservations($reservationsRepository);
+        }
 
         return $this->Render('home/home.html.twig');
     }
