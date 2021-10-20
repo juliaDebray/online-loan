@@ -24,7 +24,7 @@
     {% if customers %}
         {% for customer in customers %}
         <div class="card">
-            <div class="card-header bg-dark text-light">
+            <div class="card-header bg-primary text-light">
                 <p>Nouvelle demande de compte</p>
             </div>
             <div class="card-body">
@@ -37,10 +37,10 @@
                 <p>Code postal: {{ customer.zipcode }}</p>
                 <p>Ville: {{ customer.city }}</p>
                 </div>
-                <a class="btn my-2 btn-block btn-outline-success"
+                <a class="btn my-2 btn-block btn-success"
                    href="{{ path('customers_validation', {'customerId':customer.id}) }}">
                     Valider le compte</a>
-                <a class="btn my-2 btn-block btn-outline-danger"
+                <a class="btn my-2 btn-block btn-danger"
                    href="{{ path('customers_delete', {'customerId':customer.id}) }}">
                     Refuser le compte</a>
             </div>

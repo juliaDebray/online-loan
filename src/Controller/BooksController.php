@@ -27,6 +27,11 @@ class BooksController extends AbstractController
      */
     public function displayBookCatalog(BooksRepository $booksRepository): Response
     {
+        $identifieddUser = $this->getUser();
+        if(!isset($identifieddUser))
+        {
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('books/booksCatalog.html.twig', [
             'books' => $booksRepository->findAll(),
         ]);
