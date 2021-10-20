@@ -11,13 +11,13 @@
                 {% if userBook.reservation.status == 'reserved' %}
                         <div class="card_header color_reserved" class="card-header rounded-0 text-light d-flex justify-content-between">
                             <p class="m-0 p-0">Réservé</p>
-                            <p class="m-0 p-0">Retour prévu le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='en') }}</p>
+                            <p class="m-0 p-0">Retour prévu le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
                         </div>
                 {% else %}
 
                     <div class="card_header color_borrowed" class="card-header rounded-0 text-light d-flex justify-content-between">
                         <p class="m-0 p-0">Emprunté</p>
-                        <p class="m-0 p-0">Retour prévu le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='en') }}</p>
+                        <p class="m-0 p-0">Retour prévu le : {{ userBook.reservation.endDate|format_datetime('short', 'none', locale='fr') }}</p>
                     </div>
                 {% endif %}
             {% endif %}
@@ -30,7 +30,7 @@
                         <p class="card-text m-0 p-0">
                             <small>
                                 {{ userBook.literaryGenre }} |
-                                {{ userBook.releaseDate|format_datetime('short', 'none', locale='en') }} |
+                                {{ userBook.releaseDate|format_datetime('short', 'none', locale='fr') }} |
                                 {{ userBook.author }}
                             </small>
                         </p>

@@ -46,42 +46,6 @@
             </div>
         </div>
         {% endfor %}
-{#        <table class="table">#}
-{#            <thead>#}
-{#                <tr>#}
-{#                    <th scope="col"></th>#}
-{#                    <th scope="col">Nom</th>#}
-{#                    <th scope="col">Prénom</th>#}
-{#                    <th scope="col">Date de naissance</th>#}
-{#                    <th scope="col">Email</th>#}
-{#                    <th scope="col">Adresse</th>#}
-{#                    <th scope="col">Code Postale</th>#}
-{#                    <th scope="col">Ville</th>#}
-{#                    <th scope="colspan=2"></th>#}
-{#                    <th scope="col"></th>#}
-{#                </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#                {% for customer in customers %}#}
-{#                    <tr>#}
-{#                        <th scope="row"></th>#}
-{#                        <td>{{ customer.firstname }}</td>#}
-{#                        <td>{{ customer.lastname }}</td>#}
-{#                        <td>{{ customer.birthdate|format_datetime('short', 'none', locale='en') }}</td>#}
-{#                        <td>{{ customer.email }}</td>#}
-{#                        <td>{{ customer.address }}</td>#}
-{#                        <td>{{ customer.zipcode }}</td>#}
-{#                        <td>{{ customer.city }}</td>#}
-{#                        <td><a class="btn mx-2 btn-outline-success"#}
-{#                               href="{{ path('customers_validation', {'customerId':customer.id}) }}">#}
-{#                                Valider le compte</a></td>#}
-{#                        <td><a class="btn mx-2 btn-outline-danger"#}
-{#                               href="{{ path('customers_delete', {'customerId':customer.id}) }}">#}
-{#                                Refuser le compte</a></td>#}
-{#                    </tr>#}
-{#                {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
     {% else %}
         <p>Aucune demande en attente</p>
     {% endif %}
