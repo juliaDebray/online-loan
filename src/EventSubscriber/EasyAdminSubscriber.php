@@ -44,6 +44,10 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         if( $entity instanceof Reservations) {
             $this->setEntityReservation($entity);
         }
+
+        if( $entity instanceof Books) {
+            $this->setEntityBook($entity);
+        }
     }
 
     public function updateEntity(BeforeEntityUpdatedEvent $event): void
@@ -52,10 +56,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         if ($entity instanceof Users) {
             $this->setEntityUser($entity);
-        }
-
-        if( $entity instanceof Reservations) {
-            $this->setEntityReservation($entity);
         }
     }
 
@@ -81,20 +81,28 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
     public function setEntityReservation($entity)
     {
-        $startDate = new DateTime('now');
-        $endDate = new DateTime('now');
-        $entity->setStartDate($startDate);
+        $endDate = $entity->getStartDate();
+        $startDate = clone($endDate);
+        $increment = '+0';
 
         if($entity->getStatus() == 'reserved')
         {
-            $endDate->modify('+3 day');
+            $increment = '+3 day';
         }
 
         if($entity->getStatus() == 'borrowed')
         {
-            $endDate->modify('+21 day');
+            $increment = '+21 day';
         }
 
+        $endDate = $startDate->modify($increment);
+
+        $entity->setStartDate($startDate);
         $entity->setEndDate($endDate);
+    }
+
+    public function setEntityBook($entity)
+    {
+        $entity->setImage('default_cover.jpg');
     }
 }

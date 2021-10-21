@@ -17,7 +17,10 @@ class BooksType extends AbstractType
     public $choices = [
         'Polar'=>'Polar',
         'Fantastique'=>'Fantastique',
-        'Science-fiction'=>'Science-fiction'
+        'Science-fiction'=>'Science-fiction',
+        'Littérature' =>'Littérature',
+        'Théâtre' =>'Théâtre',
+        'Essai' =>'Essai',
     ];
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

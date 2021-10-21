@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReservationsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
@@ -20,17 +21,21 @@ class Reservations
     /**
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reservations")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Ce champs est recquis")
+
      */
     private $User;
 
     /**
      * @ORM\OneToOne(targetEntity=Books::class, inversedBy="reservation")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $book;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $startDate;
 
@@ -41,6 +46,7 @@ class Reservations
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champs est recquis")
      */
     private $status;
 

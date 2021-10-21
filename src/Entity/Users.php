@@ -74,7 +74,7 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
         }
         else
         {
-            return 'cet utilisateur ne peut pas emprunter de livre';
+            return $this->getEmail() . ': cet utilisateur ne peut pas emprunter de livre';
         }
     }
 
