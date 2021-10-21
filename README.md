@@ -65,5 +65,17 @@ You can now work on the application !
 
 [Trello](https://trello.com/invite/b/D2G7eZkN/95b44e658f9155dbdbeaacccf9861856/cr%C3%A9er-lapplication)
 
-[Deployed Application](https://online-loan.herokuapp.com/)
-    
+[Graphical charter](https://drive.google.com/file/d/1Rl0GGahzWTtiPT2fWLQqJjMJxIEZhTwz/view?usp=sharing)
+
+[UML diagram](https://drive.google.com/file/d/1Q7tm8woutjdCXguGa_5A2X9Bvzzqg6q1/view?usp=sharing)
+(warning, the relation between user and reservation is a manyToMany, not a oneToMany)
+
+[Sequence diagram -reserve the book](https://drive.google.com/file/d/1Ols2zmKVbdZ0QBauO3kNY2vYRK1A-h3D/view?usp=sharing)
+
+[Sequence diagram -return the book](https://drive.google.com/file/d/1Q7tm8woutjdCXguGa_5A2X9Bvzzqg6q1/view?usp=sharing)
+
+[Usage diagram](https://drive.google.com/file/d/1SRZUzHs5NcjmB1F409531kKbRpFjzsAT/view?usp=sharing)
+
+[Mockup](https://drive.google.com/file/d/1uiZERV4QoLRYcAZvZr-a_RnMJatCs9eO/view?usp=sharing)
+
+[Test guilde](https://drive.google.com/file/d/15EII6E39mMYiqWb-B6xabpQwVe5VU8vN/view?usp=sharing)
