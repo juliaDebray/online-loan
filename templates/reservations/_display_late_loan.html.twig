@@ -17,7 +17,7 @@
             <div class="container">
                 <div class="card-body row">
 
-                    <div class="col-8">
+                    <div class="col-12">
                         <h5 class="card-title title">{{ userLateBook.title }}</h5>
                         <p class="card-text m-0 p-0">
                             <small>
@@ -32,11 +32,11 @@
                         {% endif %}
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-12 text-end mt-2">
                         {% if userLateBook.reservation %}
                             <p class="text-danger">EN RETARD</p>
                             {% if is_granted('ROLE_EMPLOYEE') %}
-                                <a class="btn btn-success text-light position-absolute bottom-0 end-0" href="{{ path('delete_reservation', { 'reservationId': userLateBook.reservation.id }) }}">Confirmer le retour</a>
+                                <a class="btn btn-success text-light" href="{{ path('delete_reservation', { 'reservationId': userLateBook.reservation.id }) }}">Confirmer le retour</a>
                             {% endif%}
                         {% endif %}
                     </div>

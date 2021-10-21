@@ -25,7 +25,7 @@
             {% endif %}
             <div class="container">
                 <div class="card-body row">
-                    <div class="col-8">
+                    <div class="col-12">
                         <h5 class="card-title title">{{ book.title }}</h5>
                         <p class="card-text m-0 p-0">
                             <small>
@@ -36,18 +36,18 @@
                         </p>
                         <p class="card-text m-0 p-0">{{ book.description }}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-12 text-end mt-2">
                         {% if book.reservation %}
                             {% if is_granted('ROLE_EMPLOYEE') %}
                                 {% if book.reservation.status == 'reserved' %}
                                     <a href="{{ path('book_loaning', {'bookId':book.id }) }}"
-                                       class="btn btn-success text-light position-absolute bottom-0 end-0">Confirmer l'emprunt</a>
+                                       class="btn btn-success text-light">Confirmer l'emprunt</a>
                                 {% endif %}
                             {% endif %}
                         {% else %}
                             {% if is_granted('ROLE_CUSTOMER') %}
                                 <a href="{{ path('book_reservation', { 'bookId':book.id }) }}"
-                                   class="btn btn-success text-light position-absolute bottom-0 end-0">Réserver</a>
+                                   class="btn btn-success text-light">Réserver</a>
                             {% endif%}
                         {% endif %}
                     </div>

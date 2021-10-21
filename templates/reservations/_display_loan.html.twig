@@ -25,7 +25,7 @@
             <div class="container">
                 <div class="card-body row">
 
-                    <div class="col-8">
+                    <div class="col-12">
                         <h5 class="card-title title">{{ userBook.title }}</h5>
                         <p class="card-text m-0 p-0">
                             <small>
@@ -37,9 +37,9 @@
                         <p class="card-text m-0 p-0">{{ userBook.description }}</p>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-12 text-end mt-2">
                         {% if is_granted('ROLE_EMPLOYEE') %}
-                            <a class="btn btn-success text-light position-absolute bottom-0 end-0"
+                            <a class="btn btn-success text-light"
                                href="{{ path('delete_reservation', { 'reservationId': userBook.reservation.id }) }}">
                                 Confirmer le retour</a>
                         {% endif %}

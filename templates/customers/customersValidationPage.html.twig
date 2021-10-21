@@ -3,24 +3,22 @@
 {% block title %}Demandes de compte{% endblock %}
 
 {% block main %}
-    <h1 class="text-center title">Demandes de nouveau compte</h1>
+    <h1 class="text-center title mb-4">Demandes de nouveau compte</h1>
 
     {% for message in app.flashes('success') %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
+
     {% for message in app.flashes('danger') %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
+
     {% if customers %}
         {% for customer in customers %}
         <div class="card">
@@ -28,15 +26,22 @@
                 <p>Nouvelle demande de compte</p>
             </div>
             <div class="card-body">
-                <div>
-                <p>Prénom: {{ customer.firstname }}</p>
-                <p>Nom: {{ customer.lastname }}</p>
-                <p>Date de naissance: {{ customer.birthdate|format_datetime('short', 'none', locale='fr') }}</p>
-                <p>Email: {{ customer.email }}</p>
-                <p>Adresse: {{ customer.address }}</p>
-                <p>Code postal: {{ customer.zipcode }}</p>
-                <p>Ville: {{ customer.city }}</p>
-                </div>
+                <dl class="card_user">
+                    <dt>Prénom: </dt>
+                    <dd>{{ customer.firstname }}</dd>
+                    <dt>Nom: </dt>
+                    <dd>{{ customer.lastname }}</dd>
+                    <dt>Date de naissance: </dt>
+                    <dd>{{ customer.birthdate|format_datetime('short', 'none', locale='fr') }}</dd>
+                    <dt>Email: </dt>
+                    <dd>{{ customer.email }}</dd>
+                    <dt>Adresse: </dt>
+                    <dd>{{ customer.address }}</dd>
+                    <dt>Code postal: </dt>
+                    <dd>{{ customer.zipcode }}</dd>
+                    <dt>Ville: </dt>
+                    <dd>{{ customer.city }}</dd>
+                </dl>
                 <a class="btn my-2 btn-block btn-success"
                    href="{{ path('customers_validation', {'customerId':customer.id}) }}">
                     Valider le compte</a>
@@ -49,5 +54,4 @@
     {% else %}
         <p>Aucune demande en attente</p>
     {% endif %}
-
 {% endblock %}

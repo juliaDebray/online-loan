@@ -3,14 +3,12 @@
 {% block title %}Nouveau livre{% endblock %}
 
 {% block main %}
-    <h1 class="text-center title">Ajouter un livre au catalogue</h1>
+    <h1 class="text-center title mb-4">Ajouter un livre au catalogue</h1>
 
     {% for message in app.flashes('success') %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
     {{ include('books/_form.html.twig') }}

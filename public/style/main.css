@@ -1,6 +1,4 @@
-
 html, body {
-
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -13,6 +11,16 @@ main {
 p {
     margin: 0;
     padding: 0;
+}
+
+.card_user {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+
+}
+
+.base-layout {
+    background-color: #efefef;
 }
 
 .card_header {
@@ -38,7 +46,7 @@ p {
     font-family: 'Sail', cursive;
 }
 
-.nav_title{
+.nav_title {
     font-family: 'Play', sans-serif;
 }
 

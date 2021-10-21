@@ -24,7 +24,7 @@
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link {{ currentPath == path('books_catalog') ? 'active' : '' }}" href="{{ path('books_catalog') }}">Bibliothèque</a>
+                        <a class="nav-link {{ currentPath == path('catalog') ? 'active' : '' }}" href="{{ path('catalog') }}">Bibliothèque</a>
                     </li>
                     {% if is_granted('ROLE_CUSTOMER') %}
                         <li class="nav-item">
@@ -50,7 +50,9 @@
                         <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                     </li>
                     <li class="nav-item text-light">
+                       <p class="nav-link text-light align-self-end">
                         {{ app.user.username }}
+                       </p>
                     </li>
                 {% else %}
                     <li class="nav-item">
