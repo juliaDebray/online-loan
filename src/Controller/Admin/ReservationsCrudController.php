@@ -27,11 +27,10 @@ class ReservationsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('status'),
-            AssociationField::new('book'),
-            AssociationField::new('User'),
+            ChoiceField::new('status', 'Statut')->setChoices(["réservé"=>"reserved","emprunté"=>"borrowed"]),
+            AssociationField::new('book', 'Livre'),
+            AssociationField::new('User', 'Usager'),
             DateTimeField::new('start_date', 'Date de début'),
-            DateTimeField::new('end_date', 'Date de fin'),
         ];
 
     }
