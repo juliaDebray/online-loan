@@ -32,7 +32,7 @@ class ReservationsController extends AbstractController
         $status = 'reserved';
         $reservationService->makeOrEditReservation($booksRepository, $bookId, $duration, $status);
 
-        return $this->redirectToRoute('books_catalog');
+        return $this->redirectToRoute('catalog');
     }
 
     /**
@@ -52,7 +52,7 @@ class ReservationsController extends AbstractController
         $status = 'borrowed';
         $reservationService->makeOrEditReservation($booksRepository, $bookId, $duration, $status);
 
-        return $this->redirectToRoute('books_catalog');
+        return $this->redirectToRoute('catalog');
     }
 
     /**

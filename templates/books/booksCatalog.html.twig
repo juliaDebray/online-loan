@@ -61,7 +61,7 @@
         let url;
 
         if (!bookTitle && !bookType) {
-            url = '{{ path('books_catalog') }}';
+            url = '{{ path('catalog') }}';
         } else if (bookTitle !== '' && bookType !== '') {
             url = '{{ path('books_search', {'title': 'title', 'type': 'type'}) }}';
             url = url.replace('title', encodeURIComponent(bookTitle));

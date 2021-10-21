@@ -51,7 +51,7 @@ class CustomersController extends AbstractController
      * Display the page where the employee can validate a new account
      *
      * @IsGranted("ROLE_EMPLOYEE"),
-     * @Route("/validationPage", name="customers_validation_page", methods={"GET","POST"}),
+     * @Route("/validation", name="customers_validation_page", methods={"GET","POST"}),
      */
     public function displayValidateCustomer(CustomersRepository $customersRepository): Response
     {

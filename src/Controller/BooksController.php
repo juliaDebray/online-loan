@@ -23,7 +23,7 @@ class BooksController extends AbstractController
      *
      * @param BooksRepository $booksRepository
      * @return Response
-     * @Route ("/books_catalog", name="books_catalog", methods={"GET"}),
+     * @Route ("/catalog", name="catalog", methods={"GET"}),
      */
     public function displayBookCatalog(BooksRepository $booksRepository): Response
     {
