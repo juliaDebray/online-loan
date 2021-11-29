@@ -30,8 +30,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         ];
     }
 
-
-
     public function addEntity(BeforeEntityPersistedEvent $event): void
     {
         $entity = $event->getEntityInstance();

@@ -23,23 +23,24 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\NotNull(message="Ce champs est recquis")
      * @Assert\Email(message = "L'email est incorrecte")
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="180",
      *     maxMessage="180 caractères maximum")
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -49,12 +50,13 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
      *     "/^(?=.*\W)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/",
      *     message="6 caractères minimum dont une lettre minuscule, une majuscule, un caractère spécial et un chiffre")
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
      */
-    private $status;
+    private string $status;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="User", orphanRemoval=true)
@@ -128,9 +130,13 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles): self
     {
+        if(!is_array($roles) || !isset($roles)) {
+            $this->roles = ['ROLE_USER'];
+        } else {
         $this->roles = $roles;
+        }
 
         return $this;
     }
@@ -175,8 +181,11 @@ abstract class Users implements UserInterface, PasswordAuthenticatedUserInterfac
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus($status): self
     {
+        if(!is_string($status) || !isset($status)) {
+            $this->status = 'pending';
+        }
         $this->status = $status;
 
         return $this;

@@ -17,6 +17,7 @@ class BooksType extends AbstractType
     public $choices = [
         'Polar'=>'Polar',
         'Fantastique'=>'Fantastique',
+        'Poésie'=>'Poésie',
         'Science-fiction'=>'Science-fiction',
         'Littérature' =>'Littérature',
         'Théâtre' =>'Théâtre',

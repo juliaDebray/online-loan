@@ -29,7 +29,7 @@ class Customers extends Users
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
-     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
+     *     maxMessage="255 caractères maximum.")
      */
     private $firstname;
 
@@ -42,13 +42,14 @@ class Customers extends Users
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
-     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
+     *     maxMessage="255 caractères maximum.")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Type("\DateTimeInterface")
      */
     private $birthdate;
 
@@ -58,7 +59,7 @@ class Customers extends Users
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
-     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
+     *     maxMessage="255 caractères maximum.")
      */
     private $address;
 
@@ -68,7 +69,7 @@ class Customers extends Users
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
-     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
+     *     maxMessage="255 caractères maximum.")
      */
     private $zipcode;
 
@@ -81,7 +82,7 @@ class Customers extends Users
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
-     *     maxMessage="255 caractères maximum. Essayez de renomer votre fichier")
+     *     maxMessage="255 caractères maximum.")
      */
     private $city;
 

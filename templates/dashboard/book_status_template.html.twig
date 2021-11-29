@@ -1,0 +1,15 @@
+{% if field.value %}
+    {% if field.value.status == 'borrowed' %}
+        <p class="text-danger m-0 p-0">
+            Emprunté
+        </p>
+    {% else %}
+        <p class="text-warning m-0 p-0">
+            Réservé
+        </p>
+    {% endif %}
+{% else %}
+    <p class="text-success m-0 p-0">
+        Disponible
+    </p>
+{% endif %}

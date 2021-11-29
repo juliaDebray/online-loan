@@ -27,7 +27,6 @@ class CustomerService extends AbstractController
         $customer = $customersRepository->find($customerId);
         $customer->setStatus('validated');
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($customer);
         $entityManager->flush();
 
         $this->addFlash('success', 'vous avez accepté le compte.');

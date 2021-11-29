@@ -72,7 +72,7 @@ class ReservationsController extends AbstractController
     /**
      * display the reservations of one user
      *
-     * @IsGranted ("ROLE_CUSTOMER"),
+     * @IsGranted("ROLE_CUSTOMER"),
      * @Route("/show_user_loanings", name="loanings_user_show", methods={"GET","POST"})
      */
     public function showUserLoaning(ReservationService $reservationService): Response

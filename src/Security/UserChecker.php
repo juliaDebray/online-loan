@@ -15,10 +15,9 @@ class UserChecker implements UserCheckerInterface
         if (!$user instanceof AppUser) {
             return;
         }
-
         if ($user->getStatus() == 'pending') {
-            throw new CustomUserMessageAccountStatusException('Votre compte n\'a pas encore été validé par 
-            un administrateur.');
+            throw new CustomUserMessageAccountStatusException(
+                'Votre compte n\'a pas encore été validé par un administrateur.');
         }
     }
 

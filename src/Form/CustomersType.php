@@ -34,7 +34,6 @@ class CustomersType extends AbstractType
                 [
                 'label'=>'Date de naissance',
                 'format'=>'dd/MM/yyyy', 'years'=> range(date('Y')-110, date('Y')),
-
                 ])
             ->add('address', TextType::class,
                 ['label'=>'Addresse'])

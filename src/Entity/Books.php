@@ -25,12 +25,18 @@ class Books
      *     charset="UTF-8",
      *     max="255",
      *     maxMessage="255 caractères maximum")
+     * @Assert\Regex(
+     *     "/\D/",
+     *     message="Les chiffres ne sont pas acceptés.")
      */
     private $author;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Regex(
+     *     "/\D/",
+     *     message="Les chiffres ne sont pas acceptés.")
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
@@ -40,6 +46,9 @@ class Books
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(
+     *     "/\D/",
+     *     message="Les chiffres ne sont pas acceptés.")
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
@@ -50,6 +59,9 @@ class Books
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Regex(
+     *     "/\D/",
+     *     message="Les chiffres ne sont pas acceptés.")
      * @Assert\Length(
      *     charset="UTF-8",
      *     max="255",
@@ -60,8 +72,10 @@ class Books
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Regex(
+     *     "/\D/",
+     *     message="Les chiffres ne sont pas acceptés.")
      * @Assert\Length(
-     *     allowEmptyString=false,
      *     charset="UTF-8",
      *     max="255",
      *     maxMessage="255 caractères maximum")
@@ -71,6 +85,7 @@ class Books
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Ce champs est recquis")
+     * @Assert\Type("\DateTimeInterface")
      */
     private $releaseDate;
 

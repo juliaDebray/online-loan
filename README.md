@@ -45,7 +45,7 @@ you can use them with this credentials:
 |----------|----------------------|----------|
 | Admin    | admin@admin.fr       | admin    |
 | Employee | employee@employee.fr | employee |
-| Admin    | customer@customer.fr | customer |
+| Customer | customer@customer.fr | customer |
 
 you can change their password as you please running:
 ```bash

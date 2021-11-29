@@ -24,11 +24,13 @@
                         </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link {{ currentPath == path('catalog') ? 'active' : '' }}" href="{{ path('catalog') }}">Bibliothèque</a>
+                        <a class="nav-link {{ currentPath == path('catalog') ? 'active' : '' }}"
+                           href="{{ path('catalog') }}">Bibliothèque</a>
                     </li>
                     {% if is_granted('ROLE_CUSTOMER') %}
                         <li class="nav-item">
-                            <a class="nav-link" {{ currentPath == path('loanings_user_show') ? 'active' : '' }}" href="{{ path('loanings_user_show') }}">Mes emprunts</a>
+                            <a class="nav-link {{ currentPath == path('loanings_user_show') ? 'active' : '' }}"
+                               href="{{ path('loanings_user_show') }}">Mes emprunts</a>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_EMPLOYEE') %}
